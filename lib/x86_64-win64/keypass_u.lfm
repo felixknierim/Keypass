@@ -1,0 +1,40 @@
+object Form1: TForm1
+  Left = 242
+  Height = 907
+  Top = 199
+  Width = 1607
+  Caption = 'Form1'
+  ClientHeight = 907
+  ClientWidth = 1607
+  DesignTimePPI = 120
+  LCLVersion = '2.0.8.0'
+  object Liste_L: TListBox
+    Left = 89
+    Height = 752
+    Top = 64
+    Width = 1119
+    Items.Strings = (
+      ''
+    )
+    ItemHeight = 20
+    TabOrder = 0
+  end
+  object Hinzufuegen_B: TButton
+    Left = 632
+    Height = 32
+    Top = 856
+    Width = 295
+    Caption = 'Hinzufügen'
+    OnClick = Hinzufuegen_BClick
+    TabOrder = 1
+  end
+  object Aktualisieren_B: TButton
+    Left = 1235
+    Height = 45
+    Top = 72
+    Width = 349
+    Caption = 'Aktualisieren'
+    OnClick = Aktualisieren_BClick
+    TabOrder = 2
+  end
+end

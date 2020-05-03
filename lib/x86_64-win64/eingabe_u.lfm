@@ -1,0 +1,96 @@
+object Form2: TForm2
+  Left = 579
+  Height = 396
+  Top = 199
+  Width = 700
+  Caption = 'Form2'
+  ClientHeight = 396
+  ClientWidth = 700
+  DesignTimePPI = 120
+  LCLVersion = '2.0.8.0'
+  object Name_L: TLabel
+    Left = 24
+    Height = 20
+    Top = 24
+    Width = 43
+    Caption = 'Name:'
+    ParentColor = False
+  end
+  object Name_E: TEdit
+    Left = 24
+    Height = 28
+    Top = 48
+    Width = 169
+    TabOrder = 0
+  end
+  object URL_L: TLabel
+    Left = 24
+    Height = 20
+    Top = 105
+    Width = 29
+    Caption = 'URL:'
+    ParentColor = False
+  end
+  object URL_E: TEdit
+    Left = 24
+    Height = 28
+    Top = 128
+    Width = 169
+    TabOrder = 1
+  end
+  object Nutzername_L: TLabel
+    Left = 25
+    Height = 20
+    Top = 193
+    Width = 84
+    Caption = 'Nutzername:'
+    ParentColor = False
+  end
+  object Nutzername_E: TEdit
+    Left = 24
+    Height = 28
+    Top = 216
+    Width = 169
+    TabOrder = 2
+  end
+  object Passwort_L: TLabel
+    Left = 24
+    Height = 20
+    Top = 280
+    Width = 60
+    Caption = 'Passwort:'
+    ParentColor = False
+  end
+  object Passwort_E: TEdit
+    Left = 24
+    Height = 28
+    Top = 304
+    Width = 169
+    TabOrder = 3
+  end
+  object Hinzufuegen_B: TButton
+    Left = 128
+    Height = 39
+    Top = 344
+    Width = 192
+    Caption = 'Hinzufügen'
+    OnClick = Hinzufuegen_BClick
+    TabOrder = 4
+  end
+  object Fehler_L: TLabel
+    Left = 213
+    Height = 1
+    Top = 22
+    Width = 1
+    ParentColor = False
+  end
+  object Abbrechen_B: TButton
+    Left = 352
+    Height = 34
+    Top = 345
+    Width = 186
+    Caption = 'Abbrechen'
+    OnClick = Abbrechen_BClick
+    TabOrder = 5
+  end
+end
