@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 242
+  Left = 223
   Height = 907
-  Top = 199
+  Top = 709
   Width = 1607
   Caption = 'Form1'
   ClientHeight = 907
@@ -9,7 +9,7 @@ object Form1: TForm1
   DesignTimePPI = 120
   LCLVersion = '2.0.8.0'
   object Liste_L: TListBox
-    Left = 89
+    Left = 88
     Height = 752
     Top = 64
     Width = 1119
@@ -17,6 +17,7 @@ object Form1: TForm1
       ''
     )
     ItemHeight = 20
+    OnClick = Liste_LClick
     TabOrder = 0
   end
   object Hinzufuegen_B: TButton
@@ -36,5 +37,13 @@ object Form1: TForm1
     Caption = 'Aktualisieren'
     OnClick = Aktualisieren_BClick
     TabOrder = 2
+  end
+  object Label1: TLabel
+    Left = 462
+    Height = 20
+    Top = 16
+    Width = 44
+    Caption = 'Label1'
+    ParentColor = False
   end
 end

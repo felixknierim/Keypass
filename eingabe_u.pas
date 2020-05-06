@@ -45,7 +45,15 @@ var Stringlist: TStringList;
 var Index: TStringList;
 var Buffer: TStringList;
 var zaehler: integer;
+var Daten: string;
+var ASCII_Code: array of integer;
 begin
+  Daten:= Name_E.Text + '&' + URL_E.Text + '&' + Nutzername_E.Text + '&' + Passwort_E.Text;
+  for zaehler:=0 to Length(Daten) do
+  begin
+    ASCII_Code[zaehler] = ord(Daten[zaehler]);
+  end;
+  {Verschlüsselung einfügen ASCII[32] bis ASCII[127]}
   Stringlist:= TStringList.Create;
   Stringlist.Add(Name_E.Text + '&' + URL_E.Text + '&' + Nutzername_E.Text + '&' + Passwort_E.Text);
   if Not(DirectoryExists('C:\\Keypass')) then
@@ -55,14 +63,16 @@ begin
     Stringlist.SaveToFile('C:\\Keypass\\' + Name_E.Text + '.txt');
     Index:= TStringList.Create;
     Buffer:= TStringList.Create;
-    Buffer.LoadFromFile('C:\\Keypass\\index.txt');
-    for zaehler:=0 to Buffer.Count-1 do
+    if FileExists('C:\\Keypass\\Index.txt') then
     begin
-      index.Add(Buffer[zaehler]);
+      Buffer.LoadFromFile('C:\\Keypass\\index.txt');
+      for zaehler:=0 to Buffer.Count-1 do
+      begin
+        Index.Add(Buffer[zaehler]);
+      end;
     end;
     Index.Add(Name_E.Text);
     Index.SaveToFile('C:\\Keypass\\index.txt');
-
     Close;
   end
   else

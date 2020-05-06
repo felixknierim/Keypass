@@ -44,6 +44,7 @@ procedure TForm2.Hinzufuegen_BClick(Sender: TObject);
 var Stringlist: TStringList;
 var Index: TStringList;
 var Buffer: TStringList;
+var zaehler: integer;
 begin
   Stringlist:= TStringList.Create;
   Stringlist.Add(Name_E.Text + '&' + URL_E.Text + '&' + Nutzername_E.Text + '&' + Passwort_E.Text);
@@ -54,11 +55,16 @@ begin
     Stringlist.SaveToFile('C:\\Keypass\\' + Name_E.Text + '.txt');
     Index:= TStringList.Create;
     Buffer:= TStringList.Create;
-    Buffer.LoadFromFile('C:\\Keypass\\index.txt');
-    Index.Add(Buffer);
+    if FileExists('C:\\Keypass\\Index.txt') then
+    begin
+      Buffer.LoadFromFile('C:\\Keypass\\index.txt');
+      for zaehler:=0 to Buffer.Count-1 do
+      begin
+        Index.Add(Buffer[zaehler]);
+      end;
+    end;
     Index.Add(Name_E.Text);
     Index.SaveToFile('C:\\Keypass\\index.txt');
-
     Close;
   end
   else
