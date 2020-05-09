@@ -65,7 +65,7 @@ begin
      Form3.Name_E.Text := buffer[0];
      Form3.URL_E.Text := buffer[1];
      Form3.Nutzername_E.Text := buffer[2];
-     Form3.Passwort.Text := buffer[3];
+     Form3.Passwort_E.Text := buffer[3];
      Form3.showModal;
   end;
 end;

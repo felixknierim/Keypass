@@ -18,6 +18,7 @@ type
     Liste_L: TListBox;
     procedure Aktualisieren_BClick(Sender: TObject);
     procedure Hinzufuegen_BClick(Sender: TObject);
+    procedure Label1Click(Sender: TObject);
     procedure Liste_LClick(Sender: TObject);
 
 
@@ -51,6 +52,11 @@ begin
   Form2.URL_E.Text:= '';
   Form2.Nutzername_E.Text:= '';
   Form2.Passwort_E.Text:= '';
+end;
+
+procedure TForm1.Label1Click(Sender: TObject);
+begin
+
 end;
 
 procedure TForm1.Liste_LClick(Sender: TObject);
