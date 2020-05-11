@@ -57,11 +57,16 @@ begin
   zwischenergebnis := '';
   Form2.Test_L.Caption:= IntToStr(Length(input));
   buffer[6]:= 0;
-  for zaehler:=1 to Length(input) do  //für jede Nummer des Buchstaben
+  for zaehler:=1 to Length(input)-1 do  //für jede Nummer des Buchstaben
   begin
     zaehler2 := 0;
-    if(zaehler = 7) then
-    Form2.Label7.Caption:= IntToStr(input[zaehler]);
+    buffer[0]:= 0;
+    buffer[1]:= 0;
+    buffer[2]:= 0;
+    buffer[3]:= 0;
+    buffer[4]:= 0;
+    buffer[5]:= 0;
+    buffer[6]:= 0;
     while Not(input[zaehler] = 0) do   // zu Binaercode, Ergebnis in buffer bloß Rueckwaerts
     begin
       buffer[zaehler2] := input[zaehler] mod 2;
@@ -88,18 +93,12 @@ var ASCII_Code: array of integer;
 var Bin_Code: String;
 
 begin
-  Daten:= Name_E.Text + '&' + URL_E.Text + '&' + Nutzername_E.Text + '&' + Passwort_E.Text;
+  Daten:= Name_E.Text + '&' + URL_E.Text + '&' + Nutzername_E.Text + '&' + Passwort_E.Text + '&';
   SetLength(ASCII_Code, Length(Daten));
   for zaehler:=0 to Length(Daten) do
   begin
     ASCII_Code[zaehler] := ord(Daten[zaehler]);
   end;
-  Label1.Caption:= IntToStr(ASCII_Code[Length(ASCII_Code)-5]);
-  Label2.Caption:= IntToStr(ASCII_Code[Length(ASCII_Code)-4]);
-  Label3.Caption:= IntToStr(ASCII_Code[Length(ASCII_Code)-3]);
-  Label4.Caption:= IntToStr(ASCII_Code[Length(ASCII_Code)-2]);
-  Label5.Caption:= IntToStr(ASCII_Code[Length(ASCII_Code)-1]);
-  Label6.Caption:= IntToStr(ASCII_Code[Length(ASCII_Code)]);
 
   Bin_Code:= DezToBin(ASCII_Code);
   {Verschlüsselung einfügen ASCII[32] bis ASCII[127]}
@@ -123,7 +122,7 @@ begin
     end;
     Index.Add(Name_E.Text);
     Index.SaveToFile('C:\\Keypass\\index.txt');
-    //Close;
+    Close;
   end
   else
   begin

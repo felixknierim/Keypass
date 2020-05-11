@@ -12,7 +12,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="35"/>
+        <UsageCount Value="48"/>
       </Unit0>
       <Unit1>
         <Filename Value="keypass_u.pas"/>
@@ -21,10 +21,12 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Keypass_u"/>
-        <TopLine Value="78"/>
-        <CursorPos Y="98"/>
-        <UsageCount Value="35"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="116"/>
+        <CursorPos X="48" Y="127"/>
+        <UsageCount Value="48"/>
         <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="eingabe_u.pas"/>
@@ -33,12 +35,12 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Eingabe_u"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="50"/>
-        <CursorPos X="97" Y="91"/>
-        <UsageCount Value="35"/>
+        <TopLine Value="51"/>
+        <CursorPos X="36" Y="60"/>
+        <UsageCount Value="48"/>
         <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit2>
       <Unit3>
         <Filename Value="data_dialog_u.pas"/>
@@ -50,138 +52,138 @@
         <EditorIndex Value="2"/>
         <TopLine Value="25"/>
         <CursorPos X="9" Y="44"/>
-        <UsageCount Value="31"/>
+        <UsageCount Value="44"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit3>
       <Unit4>
         <Filename Value="..\Lazarus_neu\lcl\include\control.inc"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="3536"/>
-        <CursorPos Y="3548"/>
-        <UsageCount Value="9"/>
+        <TopLine Value="3936"/>
+        <CursorPos Y="3945"/>
+        <UsageCount Value="10"/>
       </Unit4>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="eingabe_u.pas"/>
-        <Caret Line="67" Column="48" TopLine="52"/>
+        <Filename Value="keypass_u.pas"/>
+        <Caret Line="57" Column="37" TopLine="46"/>
       </Position1>
       <Position2>
-        <Filename Value="eingabe_u.pas"/>
-        <Caret Line="89" Column="3" TopLine="78"/>
+        <Filename Value="keypass_u.pas"/>
+        <Caret Line="56" Column="29" TopLine="36"/>
       </Position2>
       <Position3>
-        <Filename Value="eingabe_u.pas"/>
-        <Caret Line="49" Column="25" TopLine="38"/>
+        <Filename Value="keypass_u.pas"/>
+        <Caret Line="53" Column="49" TopLine="38"/>
       </Position3>
       <Position4>
-        <Filename Value="eingabe_u.pas"/>
-        <Caret Line="55" Column="37" TopLine="43"/>
+        <Filename Value="keypass_u.pas"/>
+        <Caret Line="40" Column="35" TopLine="35"/>
       </Position4>
       <Position5>
-        <Filename Value="eingabe_u.pas"/>
-        <Caret Line="60" Column="9" TopLine="46"/>
+        <Filename Value="keypass_u.pas"/>
+        <Caret Line="53" Column="26" TopLine="42"/>
       </Position5>
       <Position6>
-        <Filename Value="eingabe_u.pas"/>
-        <Caret Line="50" Column="15" TopLine="42"/>
+        <Filename Value="keypass_u.pas"/>
+        <Caret Line="53" Column="40" TopLine="48"/>
       </Position6>
       <Position7>
-        <Filename Value="eingabe_u.pas"/>
-        <Caret Line="46" Column="18" TopLine="40"/>
+        <Filename Value="keypass_u.pas"/>
+        <Caret Line="49" Column="34" TopLine="37"/>
       </Position7>
       <Position8>
-        <Filename Value="eingabe_u.pas"/>
-        <Caret Line="84" Column="34" TopLine="33"/>
+        <Filename Value="keypass_u.pas"/>
+        <Caret Line="54" Column="67" TopLine="43"/>
       </Position8>
       <Position9>
-        <Filename Value="eingabe_u.pas"/>
-        <Caret Line="28" Column="54" TopLine="17"/>
+        <Filename Value="keypass_u.pas"/>
+        <Caret Line="131" Column="31" TopLine="111"/>
       </Position9>
       <Position10>
-        <Filename Value="eingabe_u.pas"/>
-        <Caret Line="43" Column="18" TopLine="24"/>
+        <Filename Value="keypass_u.pas"/>
+        <Caret Line="123" Column="27" TopLine="44"/>
       </Position10>
       <Position11>
-        <Filename Value="eingabe_u.pas"/>
-        <Caret Line="28" Column="7" TopLine="10"/>
+        <Filename Value="keypass_u.pas"/>
+        <Caret Line="86" Column="22" TopLine="72"/>
       </Position11>
       <Position12>
-        <Filename Value="eingabe_u.pas"/>
-        <Caret Line="80" Column="40" TopLine="71"/>
+        <Filename Value="keypass_u.pas"/>
+        <Caret Line="87" Column="46" TopLine="67"/>
       </Position12>
       <Position13>
         <Filename Value="eingabe_u.pas"/>
-        <Caret Line="50" Column="26" TopLine="39"/>
+        <Caret Line="36" Column="29" TopLine="26"/>
       </Position13>
       <Position14>
-        <Filename Value="eingabe_u.pas"/>
-        <Caret Line="67" Column="18" TopLine="51"/>
+        <Filename Value="keypass_u.pas"/>
+        <Caret Line="65" Column="5" TopLine="49"/>
       </Position14>
       <Position15>
         <Filename Value="keypass_u.pas"/>
-        <Caret Line="83" Column="39" TopLine="76"/>
+        <Caret Line="113" Column="31" TopLine="103"/>
       </Position15>
       <Position16>
         <Filename Value="keypass_u.pas"/>
-        <Caret Line="66" Column="3" TopLine="56"/>
+        <Caret Line="39" TopLine="21"/>
       </Position16>
       <Position17>
-        <Filename Value="eingabe_u.pas"/>
-        <Caret Line="67" Column="3" TopLine="56"/>
+        <Filename Value="keypass_u.pas"/>
+        <Caret Line="104" Column="21" TopLine="59"/>
       </Position17>
       <Position18>
-        <Filename Value="eingabe_u.pas"/>
-        <Caret Line="68" Column="10" TopLine="50"/>
+        <Filename Value="keypass_u.pas"/>
+        <Caret Line="105" Column="21" TopLine="84"/>
       </Position18>
       <Position19>
-        <Filename Value="eingabe_u.pas"/>
-        <Caret Line="67" Column="42" TopLine="54"/>
+        <Filename Value="keypass_u.pas"/>
+        <Caret Line="106" Column="21" TopLine="85"/>
       </Position19>
       <Position20>
-        <Filename Value="eingabe_u.pas"/>
-        <Caret Line="60" Column="46" TopLine="53"/>
+        <Filename Value="keypass_u.pas"/>
+        <Caret Line="107" Column="21" TopLine="86"/>
       </Position20>
       <Position21>
-        <Filename Value="eingabe_u.pas"/>
-        <Caret Line="61" Column="46" TopLine="54"/>
+        <Filename Value="keypass_u.pas"/>
+        <Caret Line="121" Column="41" TopLine="105"/>
       </Position21>
       <Position22>
-        <Filename Value="eingabe_u.pas"/>
-        <Caret Line="62" Column="46" TopLine="55"/>
+        <Filename Value="keypass_u.pas"/>
+        <Caret Line="120" Column="41" TopLine="104"/>
       </Position22>
       <Position23>
-        <Filename Value="eingabe_u.pas"/>
-        <Caret Line="63" Column="46" TopLine="56"/>
+        <Filename Value="keypass_u.pas"/>
+        <Caret Line="119" Column="41" TopLine="103"/>
       </Position23>
       <Position24>
-        <Filename Value="eingabe_u.pas"/>
-        <Caret Line="64" Column="46" TopLine="57"/>
+        <Filename Value="keypass_u.pas"/>
+        <Caret Line="118" Column="41" TopLine="102"/>
       </Position24>
       <Position25>
-        <Filename Value="eingabe_u.pas"/>
-        <Caret Line="65" Column="46" TopLine="58"/>
+        <Filename Value="keypass_u.pas"/>
+        <Caret Line="117" Column="41" TopLine="101"/>
       </Position25>
       <Position26>
-        <Filename Value="eingabe_u.pas"/>
-        <Caret Line="73" Column="17" TopLine="57"/>
+        <Filename Value="keypass_u.pas"/>
+        <Caret Line="51" Column="17" TopLine="41"/>
       </Position26>
       <Position27>
-        <Filename Value="eingabe_u.pas"/>
-        <Caret Line="80" Column="16" TopLine="67"/>
+        <Filename Value="keypass_u.pas"/>
+        <Caret Line="124" Column="49" TopLine="106"/>
       </Position27>
       <Position28>
-        <Filename Value="eingabe_u.pas"/>
-        <Caret Line="99" Column="41" TopLine="82"/>
+        <Filename Value="keypass_u.pas"/>
+        <Caret Line="135" Column="28" TopLine="122"/>
       </Position28>
       <Position29>
-        <Filename Value="eingabe_u.pas"/>
-        <Caret Line="59" Column="40" TopLine="58"/>
+        <Filename Value="keypass_u.pas"/>
+        <Caret Line="136" Column="28" TopLine="124"/>
       </Position29>
       <Position30>
-        <Filename Value="eingabe_u.pas"/>
-        <Caret Line="58" Column="49" TopLine="50"/>
+        <Filename Value="keypass_u.pas"/>
+        <Caret Line="135" Column="49" TopLine="123"/>
       </Position30>
     </JumpHistory>
     <RunParams>
@@ -189,4 +191,14 @@
       <Modes Count="0" ActiveMode=""/>
     </RunParams>
   </ProjectSession>
+  <Debugging>
+    <Watches Count="2">
+      <Item1>
+        <Expression Value="bufferbin"/>
+      </Item1>
+      <Item2>
+        <Expression Value="bindecode"/>
+      </Item2>
+    </Watches>
+  </Debugging>
 </CONFIG>

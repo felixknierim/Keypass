@@ -5,7 +5,7 @@ unit Keypass_u;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Eingabe_u, Data_Dialog_u;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Eingabe_u, Data_Dialog_u, Math;
 
 type
 
@@ -37,6 +37,36 @@ implementation
 
 { TForm1 }
 
+procedure BinToDez(input: String; var bufferdez: array of integer);
+var bufferbin: array of integer;
+var test: integer;
+var zaehler: integer;
+begin
+  zaehler:=0;
+  SetLength(bufferbin, Length(input));
+  for zaehler:=1 to Length(input) do
+  begin
+     if Not(input[zaehler] = '-') then
+     bufferbin[zaehler] := StrToInt(input[zaehler]);
+  end;
+
+  zaehler:=1;
+  while (zaehler <= Length(bufferbin) -7) do
+  begin
+    test:= Floor(zaehler/7);
+    bufferdez[Floor(zaehler/7)]:= 0;
+    bufferdez[Floor(zaehler/7)] += bufferbin[zaehler] *2**6;
+    bufferdez[Floor(zaehler/7)] += bufferbin[zaehler+1] *2**5;
+    bufferdez[Floor(zaehler/7)] += bufferbin[zaehler+2] *2**4;
+    bufferdez[Floor(zaehler/7)] += bufferbin[zaehler+3] *2**3;
+    bufferdez[Floor(zaehler/7)] += bufferbin[zaehler+4] *2**2;
+    bufferdez[Floor(zaehler/7)] += bufferbin[zaehler+5] *2**1;
+    bufferdez[Floor(zaehler/7)] += bufferbin[zaehler+6] *2**0;
+
+    zaehler += 7;
+  end;
+end;
+
 procedure SplitText(Trenner: Char; const str: String; Output: TStringList);
 begin
   Output.Delimiter := Trenner;
@@ -45,12 +75,14 @@ begin
 end;
 
 procedure TForm1.Hinzufuegen_BClick(Sender: TObject);
+var test: array[0..6] of integer;
 begin
   Form2.showModal;
   Form2.Name_E.Text:= '';
   Form2.URL_E.Text:= '';
   Form2.Nutzername_E.Text:= '';
   Form2.Passwort_E.Text:= '';
+
 end;
 
 procedure TForm1.Liste_LClick(Sender: TObject);
@@ -73,9 +105,11 @@ end;
 procedure TForm1.Aktualisieren_BClick(Sender: TObject);
 var Index: TStringList;
 var zaehler: integer;
+var zaehler2: integer;
 var Daten: TStringList;
 var Datenverarbeitet: TStringList;
 var buffer: string;
+var bindecode: array of integer;
 begin
    if (FileExists('C:\\Keypass\\index.txt')) then
    begin
@@ -87,9 +121,20 @@ begin
       for zaehler:= 0 to Index.Count-1 do
       begin
          Daten.LoadFromFile('C:\\Keypass\\' + Index[zaehler] + '.txt');
-         buffer:= Daten[0];
+         SetLength(bindecode, Floor(Length(Daten[0])/7));
+         BinToDez(Daten[0], bindecode);
+         buffer:= '';
+         for zaehler2:=0 to Length(bindecode)-1 do
+         begin
+         buffer+= Chr(bindecode[zaehler2]);
+         end;
+
+
+
          SplitText('&', buffer, Datenverarbeitet);
          Liste_L.Items.Add(Datenverarbeitet[0] + ' ' + Datenverarbeitet[1] + ' ' + Datenverarbeitet[2] + ' ' + Datenverarbeitet[3]);
+
+
       end;
    end;
 end;
