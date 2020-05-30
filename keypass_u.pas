@@ -39,7 +39,6 @@ implementation
 
 procedure BinToDez(input: String; var bufferdez: array of integer);
 var bufferbin: array of integer;
-var test: integer;
 var zaehler: integer;
 begin
   zaehler:=0;
@@ -53,7 +52,7 @@ begin
   zaehler:=1;
   while (zaehler <= Length(bufferbin) -7) do
   begin
-    test:= Floor(zaehler/7);
+
     bufferdez[Floor(zaehler/7)]:= 0;
     bufferdez[Floor(zaehler/7)] += bufferbin[zaehler] *2**6;
     bufferdez[Floor(zaehler/7)] += bufferbin[zaehler+1] *2**5;
@@ -75,7 +74,6 @@ begin
 end;
 
 procedure TForm1.Hinzufuegen_BClick(Sender: TObject);
-var test: array[0..6] of integer;
 begin
   Form2.showModal;
   Form2.Name_E.Text:= '';
@@ -98,6 +96,7 @@ begin
      Form3.URL_E.Text := buffer[1];
      Form3.Nutzername_E.Text := buffer[2];
      Form3.Passwort_E.Text := buffer[3];
+     Form3.Liste_L:= Liste_L;
      Form3.showModal;
   end;
 end;

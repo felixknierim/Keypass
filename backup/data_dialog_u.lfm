@@ -74,6 +74,7 @@ object Form3: TForm3
     Top = 443
     Width = 141
     Caption = 'Zurück'
+    OnClick = Zurueck_BClick
     TabOrder = 4
   end
   object Speichern_B: TButton
@@ -82,6 +83,15 @@ object Form3: TForm3
     Top = 439
     Width = 167
     Caption = 'Speichern'
+    OnClick = Speichern_BClick
     TabOrder = 5
+  end
+  object Label1: TLabel
+    Left = 338
+    Height = 20
+    Top = 86
+    Width = 44
+    Caption = 'Label1'
+    ParentColor = False
   end
 end

@@ -5,7 +5,7 @@ unit Eingabe_u;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, mylibary_u;
 
 type
 
@@ -15,14 +15,7 @@ type
     Abbrechen_B: TButton;
     Hinzufuegen_B: TButton;
     Fehler_L: TLabel;
-    Label1: TLabel;
-    Label2: TLabel;
-    Label3: TLabel;
-    Label4: TLabel;
-    Label5: TLabel;
-    Label6: TLabel;
-    Label7: TLabel;
-    Test_L: TLabel;
+    Static_L: TLabel;
     Passwort_E: TEdit;
     Passwort_L: TLabel;
     Nutzername_E: TEdit;
@@ -55,7 +48,6 @@ var buffer: array[0..6] of integer;
 var zwischenergebnis: string;
 begin
   zwischenergebnis := '';
-  Form2.Test_L.Caption:= IntToStr(Length(input));
   buffer[6]:= 0;
   for zaehler:=1 to Length(input) do  //für jede Nummer des Buchstaben
   begin
@@ -91,7 +83,6 @@ var zaehler: integer;
 var Daten: string;
 var ASCII_Code: array of integer;
 var Bin_Code: String;
-
 begin
   Daten:= Name_E.Text + '&' + URL_E.Text + '&' + Nutzername_E.Text + '&' + Passwort_E.Text + '&';
   SetLength(ASCII_Code, Length(Daten));
@@ -101,9 +92,8 @@ begin
   end;
 
   Bin_Code:= DezToBin(ASCII_Code);
-  {Verschlüsselung einfügen ASCII[32] bis ASCII[127]}
+  {Verschlüsselung einfügen TODO}
   Stringlist:= TStringList.Create;
-  {Stringlist.Add(Name_E.Text + '&' + URL_E.Text + '&' + Nutzername_E.Text + '&' + Passwort_E.Text);}
   StringList.Add(Bin_Code);
   if Not(DirectoryExists('C:\\Keypass')) then
     CreateDir('C:\\Keypass');
