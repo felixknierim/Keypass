@@ -31,7 +31,7 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="6">
+    <Units Count="7">
       <Unit0>
         <Filename Value="Keypass_p.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -68,6 +68,14 @@
         <Filename Value="libary_u.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit5>
+      <Unit6>
+        <Filename Value="passwortabfrage_u.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form4"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Passwortabfrage_u"/>
+      </Unit6>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

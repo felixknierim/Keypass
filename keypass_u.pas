@@ -5,7 +5,7 @@ unit Keypass_u;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Eingabe_u, Data_Dialog_u, Math, libary_u;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Eingabe_u, Data_Dialog_u, Math, libary_u, Passwortabfrage_u;
 
 type
 
@@ -19,9 +19,11 @@ type
     procedure Aktualisieren_BClick(Sender: TObject);
     procedure Hinzufuegen_BClick(Sender: TObject);
     procedure Liste_LClick(Sender: TObject);
+    procedure Activate; override;
 
 
   private
+
 
   public
 
@@ -36,6 +38,16 @@ implementation
 {$R *.lfm}
 
 { TForm1 }
+procedure TForm1.Activate;   //wird ausgeführt wenn sich das Fenster öffnet
+begin
+  inherited Activate;
+  if FileExists('C:\\Keypass\\Passwort.txt') then //wenn die Datei Passwort.txt existiert
+  begin
+    Form4.Zweck_L.Caption:= 'Passwort abfrage';  //ändert das Info-Label in Form4 (Passwortabfrage/eingabe)
+    Form4.showModal;  //öffnet die Passwortabfrage/eingabe
+  end;
+end;
+
 procedure TForm1.Hinzufuegen_BClick(Sender: TObject);
 begin
   Form2.showModal; //Fenster wird geöffnet
@@ -58,7 +70,7 @@ begin
     Form3.URL_E.Text := buffer[1];
     Form3.Nutzername_E.Text := buffer[2];
     Form3.Passwort_E.Text := buffer[3];
-    Form3.Liste_L:= Liste_L;  -//Liste von Form1 wird an Form3 übergeben
+    Form3.Liste_L:= Liste_L;  //Liste von Form1 wird an Form3 übergeben
     Form3.showModal;
   end;
 end;

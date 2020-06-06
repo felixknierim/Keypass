@@ -5,7 +5,7 @@ unit Eingabe_u;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, libary_u;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, libary_u, Passwortabfrage_u;
 
 type
 
@@ -45,24 +45,30 @@ var Daten: string;
 var NextAction: boolean;
 var Output: string;
 begin
-  Daten:= Name_E.Text + '&' + URL_E.Text + '&' + Nutzername_E.Text + '&' + Passwort_E.Text + '&';
-  NextAction:= false;
-  Output:= '';
-  Speichern(Daten, Name_E.Text,Output, NextAction);
+  if Not(FileExists('C:\\Keypass\\Passwort.txt')) then
+    begin
+      Form4.Zweck_L.Caption:= 'Passwort erstellen';
+      Form4.ShowModal;
+    end;
+  Daten:= Name_E.Text + '&' + URL_E.Text + '&' + Nutzername_E.Text + '&' + Passwort_E.Text + '&'; //Daten werden von Fenster in Variable gespeichert
+  NextAction:= false; //gibt an ob alles funktioniert hat
+  Output:= '';  //genauere Fehlermeldung
+  Speichern(Daten, Name_E.Text,Output, NextAction); //Daten werden gespeichert
   if NextAction = true then
   begin
-    Close;
+    Close;  //Fenster wird geschlossen
   end
   else
   begin
     Fehler_L.Caption:= Output;
-    Static_L.Caption:= '';
+    Static_L.Caption:= '';  //Da sich die Labels überlappen wird der Inhalt des einen Labels gelöscht damit man etwas lesen kann
   end;
+
 end;
 
 procedure TForm2.Abbrechen_BClick(Sender: TObject);
 begin
-  Close;
+  Close;  //Fenster wird geschlossen
 end;
 
 end.
