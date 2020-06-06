@@ -5,7 +5,7 @@ unit Keypass_u;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Eingabe_u, Data_Dialog_u, Math;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Eingabe_u, Data_Dialog_u, Math, libary_u;
 
 type
 
@@ -36,68 +36,30 @@ implementation
 {$R *.lfm}
 
 { TForm1 }
-
-procedure BinToDez(input: String; var bufferdez: array of integer);
-var bufferbin: array of integer;
-var zaehler: integer;
-begin
-  zaehler:=0;
-  SetLength(bufferbin, Length(input));
-  for zaehler:=1 to Length(input) do
-  begin
-     if Not(input[zaehler] = '-') then
-     bufferbin[zaehler] := StrToInt(input[zaehler]);
-  end;
-
-  zaehler:=1;
-  while (zaehler <= Length(bufferbin) -7) do
-  begin
-
-    bufferdez[Floor(zaehler/7)]:= 0;
-    bufferdez[Floor(zaehler/7)] += bufferbin[zaehler] *2**6;
-    bufferdez[Floor(zaehler/7)] += bufferbin[zaehler+1] *2**5;
-    bufferdez[Floor(zaehler/7)] += bufferbin[zaehler+2] *2**4;
-    bufferdez[Floor(zaehler/7)] += bufferbin[zaehler+3] *2**3;
-    bufferdez[Floor(zaehler/7)] += bufferbin[zaehler+4] *2**2;
-    bufferdez[Floor(zaehler/7)] += bufferbin[zaehler+5] *2**1;
-    bufferdez[Floor(zaehler/7)] += bufferbin[zaehler+6] *2**0;
-
-    zaehler += 7;
-  end;
-end;
-
-procedure SplitText(Trenner: Char; const str: String; Output: TStringList);
-begin
-  Output.Delimiter := Trenner;
-  Output.StrictDelimiter := True;
-  Output.DelimitedText := str;
-end;
-
 procedure TForm1.Hinzufuegen_BClick(Sender: TObject);
 begin
-  Form2.showModal;
+  Form2.showModal; //Fenster wird geöffnet
   Form2.Name_E.Text:= '';
   Form2.URL_E.Text:= '';
   Form2.Nutzername_E.Text:= '';
   Form2.Passwort_E.Text:= '';
-
 end;
 
 procedure TForm1.Liste_LClick(Sender: TObject);
 var Item: string;
 var buffer: TStringList;
 begin
-  if Not(Liste_L.ItemIndex = -1) then
+  if Not(Liste_L.ItemIndex = -1) then  //wenn etwas ausgewählt ist (ItemIndex = -1 -> nichts ist ausgewählt)
   begin
-     Item := Liste_L.Items[Liste_L.ItemIndex];
-     buffer := TStringList.Create;
-     SplitText(' ', Item, buffer);
-     Form3.Name_E.Text := buffer[0];
-     Form3.URL_E.Text := buffer[1];
-     Form3.Nutzername_E.Text := buffer[2];
-     Form3.Passwort_E.Text := buffer[3];
-     Form3.Liste_L:= Liste_L;
-     Form3.showModal;
+    Item := Liste_L.Items[Liste_L.ItemIndex];
+    buffer := TStringList.Create;
+    SplitText(' ', Item, buffer);
+    Form3.Name_E.Text := buffer[0];   //Informationen werden in das Fenster eingetragen
+    Form3.URL_E.Text := buffer[1];
+    Form3.Nutzername_E.Text := buffer[2];
+    Form3.Passwort_E.Text := buffer[3];
+    Form3.Liste_L:= Liste_L;  -//Liste von Form1 wird an Form3 übergeben
+    Form3.showModal;
   end;
 end;
 
@@ -110,32 +72,28 @@ var Datenverarbeitet: TStringList;
 var buffer: string;
 var bindecode: array of integer;
 begin
-   if (FileExists('C:\\Keypass\\index.txt')) then
-   begin
-      Index:= TStringList.Create;
-      Index.LoadFromFile('C:\\Keypass\\index.txt');
-      Liste_L.Items.Clear;
-      Daten:= TStringList.Create;
-      Datenverarbeitet:= TStringList.Create;
-      for zaehler:= 0 to Index.Count-1 do
+  if (FileExists('C:\\Keypass\\index.txt')) then   //wenn die Index-Daatei existiert
+  begin
+    Index:= TStringList.Create;
+    Index.LoadFromFile('C:\\Keypass\\index.txt'); //Index-Daten werden geladen
+    Liste_L.Items.Clear;
+    Daten:= TStringList.Create;
+    Datenverarbeitet:= TStringList.Create;
+    for zaehler:= 0 to Index.Count-1 do  //durchläuft die einzelnen Einträge
+    begin
+      Daten.LoadFromFile('C:\\Keypass\\' + Index[zaehler] + '.txt'); // Informationen eines einzelnen Eintrags werden hier in Daten gespeichert
+      SetLength(bindecode, Floor(Length(Daten[0])/7));
+      BinToDez(Daten[0], bindecode);  // Übersetzung von Binärsystem ins Dezimalsystem
+      buffer:= '';
+      for zaehler2:=0 to Length(bindecode)-2 do
       begin
-         Daten.LoadFromFile('C:\\Keypass\\' + Index[zaehler] + '.txt');
-         SetLength(bindecode, Floor(Length(Daten[0])/7));
-         BinToDez(Daten[0], bindecode);
-         buffer:= '';
-         for zaehler2:=0 to Length(bindecode)-2 do
-         begin
-         buffer+= Chr(bindecode[zaehler2]);
-         end;
-
-
-
-         SplitText('&', buffer, Datenverarbeitet);
-         Liste_L.Items.Add(Datenverarbeitet[0] + ' ' + Datenverarbeitet[1] + ' ' + Datenverarbeitet[2] + ' ' + Datenverarbeitet[3]);
-
-
+        buffer+= Chr(bindecode[zaehler2]);  // Übersetzung in Zeichen
       end;
-   end;
+
+      SplitText('&', buffer, Datenverarbeitet); // Datenseperierung
+      Liste_L.Items.Add(Datenverarbeitet[0] + ' ' + Datenverarbeitet[1] + ' ' + Datenverarbeitet[2] + ' ' + Datenverarbeitet[3]); // Daten werden in Liste dargestellt
+    end;
+  end;
 end;
 
 

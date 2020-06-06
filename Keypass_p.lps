@@ -4,13 +4,13 @@
     <PathDelim Value="\"/>
     <Version Value="11"/>
     <BuildModes Active="Default"/>
-    <Units Count="6">
+    <Units Count="7">
       <Unit0>
         <Filename Value="Keypass_p.lpr"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <CursorPos X="49" Y="10"/>
-        <UsageCount Value="53"/>
+        <CursorPos X="55" Y="10"/>
+        <UsageCount Value="67"/>
       </Unit0>
       <Unit1>
         <Filename Value="keypass_u.pas"/>
@@ -19,9 +19,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Keypass_u"/>
-        <TopLine Value="119"/>
-        <CursorPos X="10" Y="133"/>
-        <UsageCount Value="53"/>
+        <TopLine Value="76"/>
+        <CursorPos X="79" Y="78"/>
+        <UsageCount Value="67"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
@@ -33,9 +33,9 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Eingabe_u"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="59"/>
-        <CursorPos X="5" Y="76"/>
-        <UsageCount Value="53"/>
+        <TopLine Value="34"/>
+        <CursorPos X="37" Y="65"/>
+        <UsageCount Value="67"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit2>
@@ -46,142 +46,155 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Data_Dialog_u"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="94"/>
-        <CursorPos Y="99"/>
-        <UsageCount Value="49"/>
+        <TopLine Value="46"/>
+        <CursorPos X="12" Y="31"/>
+        <UsageCount Value="63"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit3>
       <Unit4>
-        <Filename Value="..\Lazarus_neu\lcl\include\control.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="3936"/>
-        <CursorPos Y="3945"/>
-        <UsageCount Value="10"/>
-      </Unit4>
-      <Unit5>
         <Filename Value="mylibary_u.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos Y="10"/>
-        <UsageCount Value="21"/>
+        <UsageCount Value="35"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="libary_u.pas"/>
+        <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="108"/>
+        <CursorPos X="37" Y="115"/>
+        <UsageCount Value="33"/>
+        <Loaded Value="True"/>
       </Unit5>
+      <Unit6>
+        <Filename Value="..\Lazarus_neu\lcl\include\control.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="3936"/>
+        <CursorPos Y="3945"/>
+        <UsageCount Value="9"/>
+      </Unit6>
     </Units>
-    <JumpHistory Count="28" HistoryIndex="27">
+    <JumpHistory Count="29" HistoryIndex="28">
       <Position1>
-        <Filename Value="eingabe_u.pas"/>
-        <Caret Line="56" Column="36" TopLine="47"/>
-      </Position1>
-      <Position2>
-        <Filename Value="eingabe_u.pas"/>
-        <Caret Line="55" Column="36" TopLine="46"/>
-      </Position2>
-      <Position3>
-        <Filename Value="eingabe_u.pas"/>
-        <Caret Line="54" Column="36" TopLine="45"/>
-      </Position3>
-      <Position4>
-        <Filename Value="eingabe_u.pas"/>
-        <Caret Line="53" Column="36" TopLine="44"/>
-      </Position4>
-      <Position5>
-        <Filename Value="eingabe_u.pas"/>
-        <Caret Line="47" Column="102" TopLine="33"/>
-      </Position5>
-      <Position6>
-        <Filename Value="eingabe_u.pas"/>
-        <Caret Line="50" Column="26" TopLine="40"/>
-      </Position6>
-      <Position7>
-        <Filename Value="keypass_u.pas"/>
-        <Caret Line="77" Column="54" TopLine="68"/>
-      </Position7>
-      <Position8>
-        <Filename Value="keypass_u.pas"/>
-        <Caret Line="41" Column="33" TopLine="31"/>
-      </Position8>
-      <Position9>
-        <Filename Value="data_dialog_u.pas"/>
-        <Caret Line="51" Column="6" TopLine="30"/>
-      </Position9>
-      <Position10>
-        <Filename Value="data_dialog_u.pas"/>
-        <Caret Line="82" Column="17" TopLine="70"/>
-      </Position10>
-      <Position11>
-        <Filename Value="eingabe_u.pas"/>
-        <Caret Line="94" TopLine="75"/>
-      </Position11>
-      <Position12>
-        <Filename Value="data_dialog_u.pas"/>
-        <Caret Line="8" Column="67"/>
-      </Position12>
-      <Position13>
-        <Filename Value="data_dialog_u.pas"/>
-        <Caret Line="86" Column="57" TopLine="74"/>
-      </Position13>
-      <Position14>
-        <Filename Value="data_dialog_u.pas"/>
-        <Caret Line="49" Column="5" TopLine="31"/>
-      </Position14>
-      <Position15>
-        <Filename Value="data_dialog_u.pas"/>
-        <Caret Line="70" Column="16" TopLine="61"/>
-      </Position15>
-      <Position16>
-        <Filename Value="data_dialog_u.pas"/>
-        <Caret Line="74" Column="40" TopLine="64"/>
-      </Position16>
-      <Position17>
-        <Filename Value="data_dialog_u.pas"/>
-        <Caret Line="80" Column="52" TopLine="67"/>
-      </Position17>
-      <Position18>
-        <Filename Value="data_dialog_u.pas"/>
-        <Caret Line="91" Column="17" TopLine="81"/>
-      </Position18>
-      <Position19>
-        <Filename Value="keypass_u.pas"/>
-        <Caret Line="99" Column="29" TopLine="84"/>
-      </Position19>
-      <Position20>
-        <Filename Value="data_dialog_u.pas"/>
-        <Caret Line="77" Column="78" TopLine="68"/>
-      </Position20>
-      <Position21>
         <Filename Value="data_dialog_u.pas"/>
         <Caret Line="78" Column="10" TopLine="59"/>
-      </Position21>
-      <Position22>
+      </Position1>
+      <Position2>
         <Filename Value="data_dialog_u.pas"/>
         <Caret Line="80" Column="52" TopLine="69"/>
-      </Position22>
-      <Position23>
+      </Position2>
+      <Position3>
         <Filename Value="data_dialog_u.pas"/>
         <Caret Line="84" Column="44" TopLine="70"/>
-      </Position23>
-      <Position24>
+      </Position3>
+      <Position4>
         <Filename Value="data_dialog_u.pas"/>
         <Caret Line="75" Column="32" TopLine="65"/>
-      </Position24>
-      <Position25>
+      </Position4>
+      <Position5>
         <Filename Value="data_dialog_u.pas"/>
         <Caret Line="8" Column="78"/>
-      </Position25>
-      <Position26>
+      </Position5>
+      <Position6>
         <Filename Value="keypass_u.pas"/>
         <Caret Line="133" Column="21" TopLine="122"/>
-      </Position26>
-      <Position27>
+      </Position6>
+      <Position7>
         <Filename Value="data_dialog_u.pas"/>
         <Caret Line="149" Column="33" TopLine="144"/>
+      </Position7>
+      <Position8>
+        <Filename Value="data_dialog_u.pas"/>
+        <Caret Line="99" Column="3" TopLine="83"/>
+      </Position8>
+      <Position9>
+        <Filename Value="keypass_u.pas"/>
+        <Caret Line="53" Column="39" TopLine="44"/>
+      </Position9>
+      <Position10>
+        <Filename Value="libary_u.pas"/>
+        <Caret Line="7" Column="60"/>
+      </Position10>
+      <Position11>
+        <Filename Value="libary_u.pas"/>
+        <Caret Line="10" Column="72"/>
+      </Position11>
+      <Position12>
+        <Filename Value="libary_u.pas"/>
+        <Caret Line="7" Column="64"/>
+      </Position12>
+      <Position13>
+        <Filename Value="libary_u.pas"/>
+        <Caret Line="8" Column="73"/>
+      </Position13>
+      <Position14>
+        <Filename Value="libary_u.pas"/>
+        <Caret Line="10" Column="41"/>
+      </Position14>
+      <Position15>
+        <Filename Value="libary_u.pas"/>
+        <Caret Line="12" Column="52"/>
+      </Position15>
+      <Position16>
+        <Filename Value="eingabe_u.pas"/>
+        <Caret Line="89" Column="8" TopLine="48"/>
+      </Position16>
+      <Position17>
+        <Filename Value="libary_u.pas"/>
+        <Caret Line="118" Column="13" TopLine="106"/>
+      </Position17>
+      <Position18>
+        <Filename Value="libary_u.pas"/>
+        <Caret Line="122" Column="11" TopLine="107"/>
+      </Position18>
+      <Position19>
+        <Filename Value="libary_u.pas"/>
+        <Caret Line="13" Column="85" TopLine="3"/>
+      </Position19>
+      <Position20>
+        <Filename Value="libary_u.pas"/>
+        <Caret Line="84" Column="87" TopLine="80"/>
+      </Position20>
+      <Position21>
+        <Filename Value="libary_u.pas"/>
+        <Caret Line="118" Column="22" TopLine="93"/>
+      </Position21>
+      <Position22>
+        <Filename Value="libary_u.pas"/>
+        <Caret Line="13" Column="86"/>
+      </Position22>
+      <Position23>
+        <Filename Value="libary_u.pas"/>
+        <Caret Line="84" Column="81" TopLine="84"/>
+      </Position23>
+      <Position24>
+        <Filename Value="libary_u.pas"/>
+        <Caret Line="13" Column="86"/>
+      </Position24>
+      <Position25>
+        <Filename Value="libary_u.pas"/>
+        <Caret Line="8" Column="83" TopLine="2"/>
+      </Position25>
+      <Position26>
+        <Filename Value="eingabe_u.pas"/>
+        <Caret Line="60" Column="29" TopLine="39"/>
+      </Position26>
+      <Position27>
+        <Filename Value="eingabe_u.pas"/>
+        <Caret Line="59" Column="3" TopLine="43"/>
       </Position27>
       <Position28>
         <Filename Value="data_dialog_u.pas"/>
-        <Caret Line="99" Column="3" TopLine="83"/>
+        <Caret Line="101" Column="7" TopLine="82"/>
       </Position28>
+      <Position29>
+        <Filename Value="data_dialog_u.pas"/>
+        <Caret Line="79" Column="41" TopLine="66"/>
+      </Position29>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>

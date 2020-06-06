@@ -86,12 +86,12 @@ object Form3: TForm3
     OnClick = Speichern_BClick
     TabOrder = 5
   end
-  object Label1: TLabel
-    Left = 338
+  object Fehler_L: TLabel
+    Left = 320
     Height = 20
-    Top = 86
-    Width = 44
-    Caption = 'Label1'
+    Top = 80
+    Width = 306
+    Caption = 'Es darf nicht das Zeichen && verwendet werden'
     ParentColor = False
   end
 end
