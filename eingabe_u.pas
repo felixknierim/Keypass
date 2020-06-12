@@ -50,20 +50,26 @@ begin
     Form4.Zweck_L.Caption:= 'Passwort erstellen'; //ändert das Info-Label in Form4 (Passwortabfrage/eingabe)
     Form4.ShowModal;  //öffnet die Passwortabfrage/eingabe
   end;
-  Daten:= Name_E.Text + '&' + URL_E.Text + '&' + Nutzername_E.Text + '&' + Passwort_E.Text + '&'; //Daten werden von Fenster in Variable gespeichert
-  NextAction:= false; //gibt an ob alles funktioniert hat
-  Output:= '';  //genauere Fehlermeldung
-  Speichern(Daten, Name_E.Text,Output, NextAction); //Daten werden gespeichert
-  if NextAction = true then
+  if (Passwort_public = '') or (Passwort_public = ' ') then
   begin
-    Close;  //Fenster wird geschlossen
+    Static_L.Caption := 'es wurde kein Passwort zur bestaetigung eingegeben';
   end
   else
   begin
-    Fehler_L.Caption:= Output;
-    Static_L.Caption:= '';  //Da sich die Labels überlappen wird der Inhalt des einen Labels gelöscht damit man etwas lesen kann
+    Daten:= Name_E.Text + '&' + URL_E.Text + '&' + Nutzername_E.Text + '&' + Passwort_E.Text + '&'; //Daten werden von Fenster in Variable gespeichert
+    NextAction:= false; //gibt an ob alles funktioniert hat
+    Output:= '';  //genauere Fehlermeldung
+    Speichern(Daten, Name_E.Text,Output, NextAction); //Daten werden gespeichert
+    if NextAction = true then
+    begin
+      Close;  //Fenster wird geschlossen
+    end
+    else
+    begin
+      Fehler_L.Caption:= Output;
+      Static_L.Caption:= '';  //Da sich die Labels überlappen wird der Inhalt des einen Labels gelöscht damit man etwas lesen kann
+    end;
   end;
-
 end;
 
 procedure TForm2.Abbrechen_BClick(Sender: TObject);

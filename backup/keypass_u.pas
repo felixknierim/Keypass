@@ -38,13 +38,15 @@ implementation
 {$R *.lfm}
 
 { TForm1 }
-procedure TForm1.Activate;
+procedure TForm1.Activate;   //wird ausgeführt wenn sich das Fenster öffnet
 begin
   inherited Activate;
-  if FileExists('C:\\Keypass\\Passwort.txt') then
+  if Not(DirectoryExists('C:\\Keypass')) then //wenn das Verzeichnis Keypass nicht existiert
+    CreateDir('C:\\Keypass');
+  if FileExists('C:\\Keypass\\Passwort.txt') then //wenn die Datei Passwort.txt existiert
   begin
-    Form4.Zweck_L.Caption:= 'Passwort abfrage';
-    Form4.showModal;
+    Form4.Zweck_L.Caption:= 'Passwort abfrage';  //ändert das Info-Label in Form4 (Passwortabfrage/eingabe)
+    Form4.showModal;  //öffnet die Passwortabfrage/eingabe
   end;
 end;
 

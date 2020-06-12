@@ -14,7 +14,6 @@ object Form4: TForm4
     Top = 72
     Width = 268
     TabOrder = 0
-    Text = 'Passwort_E'
   end
   object Bestaetigen_E: TButton
     Left = 64
@@ -25,7 +24,7 @@ object Form4: TForm4
     OnClick = Bestaetigen_EClick
     TabOrder = 1
   end
-  object Static_L: TLabel
+  object Passwort_L: TLabel
     Left = 58
     Height = 20
     Top = 48

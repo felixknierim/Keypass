@@ -45,25 +45,31 @@ var Daten: string;
 var NextAction: boolean;
 var Output: string;
 begin
-  if Not(FileExists('C:\\Keypass\\Passwort.txt')) then
-    begin
-      Form4.Zweck_L.Caption:= 'Passwort erstellen';
-      Form4.ShowModal;
-    end;
-  Daten:= Name_E.Text + '&' + URL_E.Text + '&' + Nutzername_E.Text + '&' + Passwort_E.Text + '&'; //Daten werden von Fenster in Variable gespeichert
-  NextAction:= false; //gibt an ob alles funktioniert hat
-  Output:= '';  //genauere Fehlermeldung
-  Speichern(Daten, Name_E.Text,Output, NextAction); //Daten werden gespeichert
-  if NextAction = true then
+  if Not(FileExists('C:\\Keypass\\Passwort.txt')) then //wenn die Datei Passwort.txt nicht existiert
   begin
-    Close;  //Fenster wird geschlossen
+    Form4.Zweck_L.Caption:= 'Passwort erstellen'; //ändert das Info-Label in Form4 (Passwortabfrage/eingabe)
+    Form4.ShowModal;  //öffnet die Passwortabfrage/eingabe
+  end;
+  if (Passwort = '') or (Passwort = ' ') then
+  begin
+    Static_L.Caption := 'es wurde kein Passwort zur bestaetigung eingegeben';
   end
   else
   begin
-    Fehler_L.Caption:= Output;
-    Static_L.Caption:= '';  //Da sich die Labels überlappen wird der Inhalt des einen Labels gelöscht damit man etwas lesen kann
+    Daten:= Name_E.Text + '&' + URL_E.Text + '&' + Nutzername_E.Text + '&' + Passwort_E.Text + '&'; //Daten werden von Fenster in Variable gespeichert
+    NextAction:= false; //gibt an ob alles funktioniert hat
+    Output:= '';  //genauere Fehlermeldung
+    Speichern(Daten, Name_E.Text,Output, NextAction); //Daten werden gespeichert
+    if NextAction = true then
+    begin
+      Close;  //Fenster wird geschlossen
+    end
+    else
+    begin
+      Fehler_L.Caption:= Output;
+      Static_L.Caption:= '';  //Da sich die Labels überlappen wird der Inhalt des einen Labels gelöscht damit man etwas lesen kann
+    end;
   end;
-
 end;
 
 procedure TForm2.Abbrechen_BClick(Sender: TObject);

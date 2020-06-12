@@ -57,44 +57,50 @@ var zaehler: integer;
 var NextAction: boolean;
 var Daten: string;
 var Output: string;
-begin
-  if Not(Liste_L.ItemIndex = -1) then
+begin                                  //neue Index-Datei wird erstellt
+  if Not(Liste_L.ItemIndex = -1) then  //Wenn ein Element in der Liste ausgewählt wurde Liste_L.ItemIndex = -1 --> nicht wurde ausgewählt
   begin
-    Item := Liste_L.Items[Liste_L.ItemIndex];
+    Item := Liste_L.Items[Liste_L.ItemIndex]; //Daten des Elements werden in Variable gespeichert
     buffer := TStringList.Create;
-    SplitText(' ', Item, buffer);
-    if (FileExists('C:\\Keypass\\index.txt')) then
+    SplitText(' ', Item, buffer); //Datenseperierung
+    if (FileExists('C:\\Keypass\\index.txt')) then   //wenn die Index-Datei existiert
     begin
       Index_alt:= TStringList.Create;
       Index_neu:= TStringList.Create;
-      Index_alt.LoadFromFile('C:\\Keypass\\index.txt');
-      for zaehler:=0 to Index_alt.Count-1 do
+      Index_alt.LoadFromFile('C:\\Keypass\\index.txt'); //Daten werden geladen
+      for zaehler:=0 to Index_alt.Count-1 do     //durchläuft alle Elemente der Index - Datei
       begin
-        if(Not(Index_alt[zaehler] = buffer[0])) then
+        if(Not(Index_alt[zaehler] = buffer[0])) then //wenn der Eintrag aus der alten Index-Datei nicht der geänderte Eintrag ist
         begin
-          Index_neu.Add(Index_alt[zaehler]);
+          Index_neu.Add(Index_alt[zaehler]);    //alter Eintrag wird übernommen
         end
-        else
+        else     //wenn es der überarbeitete Eintrag ist
         begin
           continue;
         end;
       end;
-      Index_neu.SaveToFile('C:\\Keypass\\index.txt');
-      DeleteFile('C:\\Keypass\\' + buffer[0] + '.txt');
+      Index_neu.SaveToFile('C:\\Keypass\\index.txt'); //neue Index-Datei wird gespeichert
+      DeleteFile('C:\\Keypass\\' + buffer[0] + '.txt');  //alte Datei wird gelöscht (Die Datei die Überarbeitet wird)
 
       NextAction:= false;
       Output:= '';
       Daten:= Name_E.Text + '&' + URL_E.Text + '&' + Nutzername_E.Text + '&' + Passwort_E.Text + '&';
-      Speichern(Daten, Name_E.Text,Output, NextAction);
-      if NextAction = true then
+      if (Passwort = '') or (Passwort = ' ') then
       begin
-        Close;
+        Fehler_L.Caption := 'es wurde kein Passwort zur bestaetigung eingegeben';
       end
       else
       begin
-        Fehler_L.Caption:= Output;
+        Speichern(Daten, Name_E.Text,Output, NextAction); //überarbeitete Datei wird gespeichert
+        if NextAction = true then    //wenn alles funktioniert hat
+        begin
+          Close;
+        end
+        else
+        begin
+          Fehler_L.Caption:= Output;  //Fehlerausgabe
+        end;
       end;
-
     end;
   end;
 end;

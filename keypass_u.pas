@@ -41,6 +41,8 @@ implementation
 procedure TForm1.Activate;   //wird ausgeführt wenn sich das Fenster öffnet
 begin
   inherited Activate;
+  if Not(DirectoryExists('C:\\Keypass')) then //wenn das Verzeichnis Keypass nicht existiert
+    CreateDir('C:\\Keypass');
   if FileExists('C:\\Keypass\\Passwort.txt') then //wenn die Datei Passwort.txt existiert
   begin
     Form4.Zweck_L.Caption:= 'Passwort abfrage';  //ändert das Info-Label in Form4 (Passwortabfrage/eingabe)

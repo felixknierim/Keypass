@@ -85,16 +85,22 @@ begin                                  //neue Index-Datei wird erstellt
       NextAction:= false;
       Output:= '';
       Daten:= Name_E.Text + '&' + URL_E.Text + '&' + Nutzername_E.Text + '&' + Passwort_E.Text + '&';
-      Speichern(Daten, Name_E.Text,Output, NextAction); //überarbeitete Datei wird gespeichert
-      if NextAction = true then    //wenn alles funktioniert hat
+      if (Passwort_public = '') or (Passwort_public = ' ') then
       begin
-        Close;
+        Fehler_L.Caption := 'es wurde kein Passwort zur bestaetigung eingegeben';
       end
       else
       begin
-        Fehler_L.Caption:= Output;  //Fehlerausgabe
+        Speichern(Daten, Name_E.Text,Output, NextAction); //überarbeitete Datei wird gespeichert
+        if NextAction = true then    //wenn alles funktioniert hat
+        begin
+          Close;
+        end
+        else
+        begin
+          Fehler_L.Caption:= Output;  //Fehlerausgabe
+        end;
       end;
-
     end;
   end;
 end;
