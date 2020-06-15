@@ -31,37 +31,7 @@ implementation
 {$R *.lfm}
 
 { TForm4 }
-function DezToBin(input: array of integer): String;
-var zaehler: integer;
-var zaehler2: integer;
-var buffer: array[0..6] of integer;
-var zwischenergebnis: string;
-begin
-  zwischenergebnis := '';
-  buffer[6]:= 0;
-  for zaehler:=1 to Length(input) do  //für jede Nummer des Buchstaben
-  begin
-    zaehler2 := 0;
-    buffer[0]:= 0;
-    buffer[1]:= 0;
-    buffer[2]:= 0;
-    buffer[3]:= 0;
-    buffer[4]:= 0;
-    buffer[5]:= 0;
-    buffer[6]:= 0;
-    while Not(input[zaehler-1] = 0) do   // zu Binaercode, Ergebnis in buffer bloß Rueckwaerts
-    begin
-      buffer[zaehler2] := input[zaehler-1] mod 2;
-      input[zaehler-1] := trunc(input[zaehler-1] / 2);
-      zaehler2 += 1;
-    end;
-    for zaehler2:=Length(buffer)-1 downto 0 do
-    begin
-      zwischenergebnis += IntToStr(buffer[zaehler2]);  //Ergebnis für ein Zeichen wird richtigrum in String gebracht
-    end;
-  end;
-  DezToBin := zwischenergebnis; //Rueckgabewert
-end;
+
 
 procedure TForm4.Bestaetigen_EClick(Sender: TObject);
 var Passwort_Hash: TStringList;

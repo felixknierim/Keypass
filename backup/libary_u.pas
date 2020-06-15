@@ -13,6 +13,7 @@ function DezToBin(input: array of integer): String;
 procedure speichern(Daten: String; Name: String; var Output: String; var NextAction: boolean);
 function encrypt(Daten: string; Schluessel: string): string;
 function BinXor(bin1: integer; bin2: integer): integer;
+function decrypt(Daten: string; Key: string): string;
 
 var Passwort_public: string;
 
@@ -34,20 +35,20 @@ begin
   for zaehler:=1 to Length(input) do    //zaehler:=1 weil das erste Zeichen einer Zeichenkette nicht auslesbar ist
   begin
     if Not(input[zaehler] = '-') then
-      bufferbin[zaehler] := StrToInt(input[zaehler]);  //alle Zahlen von input in bufferbin gespeichert bloß als integer
+      bufferbin[zaehler-1] := StrToInt(input[zaehler]);  //alle Zahlen von input in bufferbin gespeichert bloß als integer
   end;
 
   zaehler:=1;
   while (zaehler <= Length(bufferbin) ) do
   begin
     bufferdez[Floor(zaehler/7)]:= 0;
-    bufferdez[Floor(zaehler/7)] += bufferbin[zaehler] *2**6;   //Übersetzung von Binärenzahlen in Dezimalzahlen
-    bufferdez[Floor(zaehler/7)] += bufferbin[zaehler+1] *2**5;
-    bufferdez[Floor(zaehler/7)] += bufferbin[zaehler+2] *2**4;
-    bufferdez[Floor(zaehler/7)] += bufferbin[zaehler+3] *2**3;
-    bufferdez[Floor(zaehler/7)] += bufferbin[zaehler+4] *2**2;
-    bufferdez[Floor(zaehler/7)] += bufferbin[zaehler+5] *2**1;
-    bufferdez[Floor(zaehler/7)] += bufferbin[zaehler+6] *2**0;
+    bufferdez[Floor(zaehler/7)] += bufferbin[zaehler-1] *2**6;   //Übersetzung von Binärenzahlen in Dezimalzahlen
+    bufferdez[Floor(zaehler/7)] += bufferbin[zaehler] *2**5;
+    bufferdez[Floor(zaehler/7)] += bufferbin[zaehler+1] *2**4;
+    bufferdez[Floor(zaehler/7)] += bufferbin[zaehler+2] *2**3;
+    bufferdez[Floor(zaehler/7)] += bufferbin[zaehler+3] *2**2;
+    bufferdez[Floor(zaehler/7)] += bufferbin[zaehler+4] *2**1;
+    bufferdez[Floor(zaehler/7)] += bufferbin[zaehler+5] *2**0;
 
     zaehler += 7; //ein Zeichen wird in 7 bit gespeichert also hier ein Zeichen weiter (eigentlich sind es immer 8 bit aber ich habe hier 7 bit verwendet, weil hier keine 8 bit benötigt werden
   end;
@@ -94,14 +95,13 @@ var Bin_Code: String;
 var generated_key: string;
 var verschluesselte_Daten: string;
 var Schluessel: TStringList;
-var Passwort_bin: string;
 begin
 
   NextAction:= false;
   SetLength(ASCII_Code, Length(Daten));
-  for zaehler:=0 to Length(Daten) do
+  for zaehler:=1 to Length(Daten) do
   begin
-    ASCII_Code[zaehler] := ord(Daten[zaehler]);  //Übersetzung von Buchstaben in Dezimalzahlen
+    ASCII_Code[zaehler-1] := ord(Daten[zaehler]);  //Übersetzung von Buchstaben in Dezimalzahlen
   end;
 
   Bin_Code:= DezToBin(ASCII_Code);  //Übersettzung in Binärcode
@@ -115,12 +115,14 @@ begin
   verschluesselte_Daten := encrypt(Bin_Code, generated_key);
 
   //schlüssel speichern
-  Schluessel:= TStringList.Create;
-  if FileExists('C:\\Keypass\\Keys.txt') then
-    Schluessel.LoadFromFile('C:\\Keypass\\Keys.txt');
+  if Not(FileExists('C:\\Keypass\\' + Name + '.txt')) then
+  begin
+    Schluessel:= TStringList.Create;
+    if FileExists('C:\\Keypass\\Keys.txt') then
+      Schluessel.LoadFromFile('C:\\Keypass\\Keys.txt');
     Schluessel.Add(Name + ':' + encrypt(generated_key,Passwort_public));
     Schluessel.SaveToFile('C:\\Keypass\\Keys.txt');
-
+  end;
   {Verschlüsselung einfügen TODO end}
   Stringlist:= TStringList.Create;
   StringList.Add(verschluesselte_Daten);
@@ -180,6 +182,23 @@ begin
     BinXor:= 1;
   end;
 end;
+
+function decrypt(Daten: string; Key: string): string;
+var zaehler: integer;
+var zwischenergebnis: string;
+begin
+  zwischenergebnis:= '';
+  if Length(Daten) <= Length(Key) then
+  begin
+    for zaehler:=1 to Length(Daten) do
+    begin
+      zwischenergebnis+= IntToStr(BinXor(StrToInt(Daten[zaehler]), StrToInt(Key[zaehler])));
+    end;
+    decrypt := zwischenergebnis;
+  end;
+end;
+
+
 
 end.
 

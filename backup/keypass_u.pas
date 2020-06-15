@@ -85,6 +85,8 @@ var Daten: TStringList;
 var Datenverarbeitet: TStringList;
 var buffer: string;
 var bindecode: array of integer;
+var Keys: TStringlist;
+var getrennter_Key: TStringList;
 begin
   if (FileExists('C:\\Keypass\\index.txt')) then   //wenn die Index-Daatei existiert
   begin
@@ -97,14 +99,26 @@ begin
     begin
       Daten.LoadFromFile('C:\\Keypass\\' + Index[zaehler] + '.txt'); // Informationen eines einzelnen Eintrags werden hier in Daten gespeichert
       SetLength(bindecode, Floor(Length(Daten[0])/7));
+      Keys := TStringList.Create;
+      Keys.LoadFromFile('C:\\Keypass\\Keys.txt');  //lädt die Schlüssel aus Datei
+      getrennter_Key:= TStringList.Create;
+      for zaehler2:=0 to Keys.Count-1 do       //Keys.Count-1 weil man bei 0 anfängt zu Zählen        durchläuft alle Elemente von Keys
+      begin
+        SplitText(':',Keys[zaehler2], getrennter_Key);  //Informationen werden aufgeteilt getrennter_Key[0]->Dateiname, getrennter_Key[1]->verschlüsselter Schlüssel
+        if getrennter_Key[0] = Index[zaehler] then
+        begin
+          getrennter_Key[1] := decrypt(getrennter_Key[1], Passwort_public);  //Schlüssel wird mit Passwort der Benutzers entschlüsselt
+          Daten[0]:= decrypt(Daten[0], getrennter_Key[1]);   //Daten/Eintrag werden/wird mit entschlüsseltem Schlüssel entschlüsselt
+        end;
+      end;
       BinToDez(Daten[0], bindecode);  // Übersetzung von Binärsystem ins Dezimalsystem
       buffer:= '';
-      for zaehler2:=0 to Length(bindecode)-2 do
+      for zaehler2:=0 to Length(bindecode)-1 do  //durchläuft alle Elemente von bindecode
       begin
-        buffer+= Chr(bindecode[zaehler2]);  // Übersetzung in Zeichen
+        buffer+= Chr(bindecode[zaehler2]);  // Übersetzung in Zeichen -> zeichen werden an das Ende der Zeichenkette von buffer immer drangehängt
       end;
 
-      SplitText('&', buffer, Datenverarbeitet); // Datenseperierung
+      SplitText('&', buffer, Datenverarbeitet); // Datenseperierung -> in Datenverarbeitet ist jeweils eine Information (Name, URL, benutzername, passwort)
       Liste_L.Items.Add(Datenverarbeitet[0] + ' ' + Datenverarbeitet[1] + ' ' + Datenverarbeitet[2] + ' ' + Datenverarbeitet[3]); // Daten werden in Liste dargestellt
     end;
   end;

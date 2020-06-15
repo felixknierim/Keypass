@@ -50,7 +50,7 @@ begin
     Form4.Zweck_L.Caption:= 'Passwort erstellen'; //ändert das Info-Label in Form4 (Passwortabfrage/eingabe)
     Form4.ShowModal;  //öffnet die Passwortabfrage/eingabe
   end;
-  if (Passwort = '') or (Passwort = ' ') then
+  if (Passwort_public = '') or (Passwort_public = ' ') then
   begin
     Static_L.Caption := 'es wurde kein Passwort zur bestaetigung eingegeben';
   end
