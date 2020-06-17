@@ -74,6 +74,8 @@ begin
       Passwort_public:= DezToBin(buffer); //Hash des Passwortes in Binärcode wird an Libary_u gegeben
       Close;
   end;
+  Passwort_Hash.Free();
+
 end;
 
 end.

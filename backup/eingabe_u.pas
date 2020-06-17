@@ -44,7 +44,28 @@ procedure TForm2.Hinzufuegen_BClick(Sender: TObject);
 var Daten: string;
 var NextAction: boolean;
 var Output: string;
+var eingabe: string;
+var zaehler: integer;
+var falsches_Zeichen: boolean;
 begin
+  eingabe:= Name_E.Text + URL_E.Text + Nutzername_E.Text + Passwort_E.Text;
+  falsches_Zeichen:= false;
+  for zaehler:=0 to Length(eingabe) do
+  begin
+    if(eingabe[zaehler] = '&') or (eingabe[zaehler] = 'ö') or (eingabe[zaehler] = 'ä') or (eingabe[zaehler] = 'ü') or (eingabe[zaehler] = 'ß') then
+    begin
+      falsches_Zeichen:= true
+    end;
+  end;
+  if falsches_Zeichen then
+  begin
+    Static_L.Caption := 'es wurde ein ungültiges Zeichen verwendet';
+  end
+  else
+  begin
+
+
+
   if Not(FileExists('C:\\Keypass\\Passwort.txt')) then //wenn die Datei Passwort.txt nicht existiert
   begin
     Form4.Zweck_L.Caption:= 'Passwort erstellen'; //ändert das Info-Label in Form4 (Passwortabfrage/eingabe)
@@ -69,6 +90,7 @@ begin
       Fehler_L.Caption:= Output;
       Static_L.Caption:= '';  //Da sich die Labels überlappen wird der Inhalt des einen Labels gelöscht damit man etwas lesen kann
     end;
+  end;
   end;
 end;
 

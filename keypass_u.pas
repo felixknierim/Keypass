@@ -13,10 +13,11 @@ type
 
   TForm1 = class(TForm)
     Aktualisieren_B: TButton;
+    Beenden_B: TButton;
     Hinzufuegen_B: TButton;
-    Label1: TLabel;
     Liste_L: TListBox;
     procedure Aktualisieren_BClick(Sender: TObject);
+    procedure Beenden_BClick(Sender: TObject);
     procedure Hinzufuegen_BClick(Sender: TObject);
     procedure Liste_LClick(Sender: TObject);
     procedure Activate; override;
@@ -74,6 +75,7 @@ begin
     Form3.Passwort_E.Text := buffer[3];
     Form3.Liste_L:= Liste_L;  //Liste von Form1 wird an Form3 übergeben
     Form3.showModal;
+    buffer.Free();
   end;
 end;
 
@@ -106,7 +108,7 @@ begin
       begin
         SplitText(':',Keys[zaehler2], getrennter_Key);  //Informationen werden aufgeteilt getrennter_Key[0]->Dateiname, getrennter_Key[1]->verschlüsselter Schlüssel
         if getrennter_Key[0] = Index[zaehler] then
-        begin
+        begin;
           getrennter_Key[1] := decrypt(getrennter_Key[1], Passwort_public);  //Schlüssel wird mit Passwort der Benutzers entschlüsselt
           Daten[0]:= decrypt(Daten[0], getrennter_Key[1]);   //Daten/Eintrag werden/wird mit entschlüsseltem Schlüssel entschlüsselt
         end;
@@ -122,6 +124,17 @@ begin
       Liste_L.Items.Add(Datenverarbeitet[0] + ' ' + Datenverarbeitet[1] + ' ' + Datenverarbeitet[2] + ' ' + Datenverarbeitet[3]); // Daten werden in Liste dargestellt
     end;
   end;
+  Index.Free();
+  Daten.Free();
+  Datenverarbeitet.Free();
+  Keys.Free();
+  getrennter_Key.Free();
+
+end;
+
+procedure TForm1.Beenden_BClick(Sender: TObject);
+begin
+  Application.Terminate;
 end;
 
 

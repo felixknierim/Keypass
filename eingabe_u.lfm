@@ -97,8 +97,8 @@ object Form2: TForm2
     Left = 240
     Height = 20
     Top = 24
-    Width = 306
-    Caption = 'Es darf nicht das Zeichen && verwendet werden'
+    Width = 369
+    Caption = 'Es dürfen nicht die Zeichen && ö ä ü ß verwendet werden'
     ParentColor = False
   end
 end

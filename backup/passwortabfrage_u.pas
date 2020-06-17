@@ -71,9 +71,11 @@ begin
       begin
         buffer[zaehler-1] := ord(Passwort_local[zaehler]);  //Übersetzung von Buchstaben in Dezimalzahlen
       end;
-      Passwort_public:= DezToBin(buffer);
+      Passwort_public:= DezToBin(buffer); //Hash des Passwortes in Binärcode wird an Libary_u gegeben
       Close;
   end;
+  Passwort_Hash.Free();
+  buffer := Nil;
 end;
 
 end.

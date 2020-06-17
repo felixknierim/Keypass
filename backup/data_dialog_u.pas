@@ -28,7 +28,7 @@ type
   private
 
   public
-    Liste_L: TListBox;
+    Liste_L: TListBox; //Dient der Übergabe
   end;
 
 var
@@ -57,6 +57,9 @@ var zaehler: integer;
 var NextAction: boolean;
 var Daten: string;
 var Output: string;
+var Keys_alt: TStringList;
+var Keys_neu: TStringList;
+var buffer2: TStringList;
 begin                                  //neue Index-Datei wird erstellt
   if Not(Liste_L.ItemIndex = -1) then  //Wenn ein Element in der Liste ausgewählt wurde Liste_L.ItemIndex = -1 --> nicht wurde ausgewählt
   begin
@@ -76,16 +79,34 @@ begin                                  //neue Index-Datei wird erstellt
         end
         else     //wenn es der überarbeitete Eintrag ist
         begin
-          continue;
+          continue;      //der Neue Eintrag wird Automatisch bei speichern() im Index erstellt
         end;
       end;
       Index_neu.SaveToFile('C:\\Keypass\\index.txt'); //neue Index-Datei wird gespeichert
       DeleteFile('C:\\Keypass\\' + buffer[0] + '.txt');  //alte Datei wird gelöscht (Die Datei die Überarbeitet wird)
 
+      Keys_alt := TStringList.Create;
+      Keys_neu := TStringList.Create;
+      buffer2 := TStringList.Create;
+      Keys_alt.LoadFromFile('C:\\Keypass\\Keys.txt');
+      for zaehler:=0 to Keys_alt.Count-1 do
+      begin
+        SplitText(':', Keys_alt[zaehler], buffer2);
+        if Not(buffer2[0] = buffer[0]) then
+        begin
+          Keys_neu.Add(Keys_alt[zaehler]);
+        end
+        else
+        begin
+          continue;
+        end;
+      end;
+      Keys_neu.SaveToFile('C:\\Keypass\\Keys.txt');
+
       NextAction:= false;
       Output:= '';
       Daten:= Name_E.Text + '&' + URL_E.Text + '&' + Nutzername_E.Text + '&' + Passwort_E.Text + '&';
-      if (Passwort = '') or (Passwort = ' ') then
+      if (Passwort_public = '') or (Passwort_public = ' ') then
       begin
         Fehler_L.Caption := 'es wurde kein Passwort zur bestaetigung eingegeben';
       end
@@ -103,6 +124,9 @@ begin                                  //neue Index-Datei wird erstellt
       end;
     end;
   end;
+  Index_alt.Free();
+  Index_neu.Free();
+  buffer.Free();
 end;
 
 end.
