@@ -14,6 +14,7 @@ procedure speichern(Daten: String; Name: String; var Output: String; var NextAct
 function encrypt(Daten: string; Schluessel: string): string;
 function BinXor(bin1: integer; bin2: integer): integer;
 function decrypt(Daten: string; Key: string): string;
+procedure Eintrag_loeschen(Name:string);
 
 var Passwort_public: string;
 
@@ -214,7 +215,58 @@ begin
   end;
 end;
 
+procedure Eintrag_loeschen(Name: string);
+var index_alt: TStringList;
+var index_neu: TStringList;
+var zaehler: integer;
+var Keys_alt: TStringList;
+var Keys_neu: TStringList;
+var buffer2: TStringList;
+begin
+  if (FileExists('C:\\Keypass\\index.txt')) then   //wenn die Index-Datei existiert
+  begin
+    Index_alt:= TStringList.Create;
+    Index_neu:= TStringList.Create;
+    Index_alt.LoadFromFile('C:\\Keypass\\index.txt'); //Daten werden geladen
+    for zaehler:=0 to Index_alt.Count-1 do     //durchläuft alle Elemente der Index - Datei
+    begin
+      if(Not(Index_alt[zaehler] = Name)) then //wenn der Eintrag aus der alten Index-Datei nicht der geänderte Eintrag ist
+      begin
+        Index_neu.Add(Index_alt[zaehler]);    //alter Eintrag wird übernommen
+      end
+      else     //wenn es der überarbeitete Eintrag ist
+      begin
+        continue;      //der Neue Eintrag wird Automatisch bei speichern() im Index erstellt
+      end;
+    end;
+    Index_neu.SaveToFile('C:\\Keypass\\index.txt'); //neue Index-Datei wird gespeichert
+    DeleteFile('C:\\Keypass\\' + Name + '.txt');  //alte Datei wird gelöscht (Die Datei die Überarbeitet wird)
 
+    Keys_alt := TStringList.Create;
+      Keys_neu := TStringList.Create;
+      buffer2 := TStringList.Create;
+      Keys_alt.LoadFromFile('C:\\Keypass\\Keys.txt');
+      for zaehler:=0 to Keys_alt.Count-1 do
+      begin
+        SplitText(':', Keys_alt[zaehler], buffer2);
+        if Not(buffer2[0] = Name) then
+        begin
+          Keys_neu.Add(Keys_alt[zaehler]);
+        end
+        else
+        begin
+          continue;
+        end;
+      end;
+      Keys_neu.SaveToFile('C:\\Keypass\\Keys.txt');
+
+    Index_alt.free;
+    Index_neu.free;
+    Keys_alt.free;
+    Keys_neu.free;
+    buffer2.free;
+  end;
+end;
 
 end.
 

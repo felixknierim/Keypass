@@ -97,6 +97,8 @@ begin
     Liste_L.Items.Clear;
     Daten:= TStringList.Create;
     Datenverarbeitet:= TStringList.Create;
+    if Not(index.Count <= 0) then
+    begin
     for zaehler:= 0 to Index.Count-1 do  //durchläuft die einzelnen Einträge
     begin
       Daten.LoadFromFile('C:\\Keypass\\' + Index[zaehler] + '.txt'); // Informationen eines einzelnen Eintrags werden hier in Daten gespeichert
@@ -122,13 +124,21 @@ begin
 
       SplitText('&', buffer, Datenverarbeitet); // Datenseperierung -> in Datenverarbeitet[x] ist jeweils eine Information (Name, URL, benutzername, passwort)
       Liste_L.Items.Add(Datenverarbeitet[0] + ' ' + Datenverarbeitet[1] + ' ' + Datenverarbeitet[2] + ' ' + Datenverarbeitet[3]); // Daten werden in Liste dargestellt
+       Keys.Free();
+  getrennter_Key.Free();
     end;
-  end;
+    end
+    else
+    begin
+      Liste_L.Items.Add('Keine Einträge gefunden');
+    end;
+
   Index.Free();
   Daten.Free();
   Datenverarbeitet.Free();
-  Keys.Free();
-  getrennter_Key.Free();
+
+
+end;
 
 end;
 

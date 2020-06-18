@@ -5,7 +5,7 @@ unit Passwortabfrage_u;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, md5, sha1, libary_u;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, md5, sha1, libary_u, Passwortabfrage_u;
 
 type
 
@@ -75,7 +75,7 @@ begin
       Close;
   end;
   Passwort_Hash.Free();
-  buffer := Nil;
+
 end;
 
 end.

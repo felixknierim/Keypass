@@ -7,13 +7,14 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Math;
 
-procedure SplitText(Trenner: Char; const str: String; var Output: TStringList);
+procedure SplitText(Trenner: Char; str: String; var Output: TStringList);
 procedure BinToDez(input: String; var bufferdez: array of integer);
 function DezToBin(input: array of integer): String;
 procedure speichern(Daten: String; Name: String; var Output: String; var NextAction: boolean);
 function encrypt(Daten: string; Schluessel: string): string;
 function BinXor(bin1: integer; bin2: integer): integer;
 function decrypt(Daten: string; Key: string): string;
+procedure Eintrag_loeschen(Name:string);
 
 var Passwort_public: string;
 
@@ -214,7 +215,33 @@ begin
   end;
 end;
 
-
+procedure Eintrag_loeschen(Name: string);
+var index_alt: TStringList;
+var index_neu: TStringList;
+var zaehler: integer;
+begin
+  if (FileExists('C:\\Keypass\\index.txt')) then   //wenn die Index-Datei existiert
+  begin
+    Index_alt:= TStringList.Create;
+    Index_neu:= TStringList.Create;
+    Index_alt.LoadFromFile('C:\\Keypass\\index.txt'); //Daten werden geladen
+    for zaehler:=0 to Index_alt.Count-1 do     //durchläuft alle Elemente der Index - Datei
+    begin
+      if(Not(Index_alt[zaehler] = Name)) then //wenn der Eintrag aus der alten Index-Datei nicht der geänderte Eintrag ist
+      begin
+        Index_neu.Add(Index_alt[zaehler]);    //alter Eintrag wird übernommen
+      end
+      else     //wenn es der überarbeitete Eintrag ist
+      begin
+        continue;      //der Neue Eintrag wird Automatisch bei speichern() im Index erstellt
+      end;
+    end;
+    Index_neu.SaveToFile('C:\\Keypass\\index.txt'); //neue Index-Datei wird gespeichert
+    DeleteFile('C:\\Keypass\\' + Name + '.txt');  //alte Datei wird gelöscht (Die Datei die Überarbeitet wird)
+    Index_alt.free;
+    Index_neu.free;
+  end;
+end;
 
 end.
 

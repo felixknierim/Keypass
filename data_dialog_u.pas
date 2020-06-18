@@ -5,13 +5,14 @@ unit Data_Dialog_u;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, libary_u;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, libary_u, Passwortabfrage_u;
 
 type
 
   { TForm3 }
 
   TForm3 = class(TForm)
+    Loeschen_B: TButton;
     Fehler_L: TLabel;
     Zurueck_B: TButton;
     Speichern_B: TButton;
@@ -23,6 +24,7 @@ type
     URL_L: TLabel;
     Name_E: TEdit;
     Name_L: TLabel;
+    procedure Loeschen_BClick(Sender: TObject);
     procedure Speichern_BClick(Sender: TObject);
     procedure Zurueck_BClick(Sender: TObject);
   private
@@ -51,85 +53,72 @@ end;
 procedure TForm3.Speichern_BClick(Sender: TObject);
 var Item: string;
 var buffer: TStringList;
-var Index_alt: TStringlist;
-var Index_neu: TStringList;
-var zaehler: integer;
 var NextAction: boolean;
 var Daten: string;
 var Output: string;
-var Keys_alt: TStringList;
-var Keys_neu: TStringList;
-var buffer2: TStringList;
+var zaehler: integer;
+var falsches_Zeichen: integer;
 begin                                  //neue Index-Datei wird erstellt
   if Not(Liste_L.ItemIndex = -1) then  //Wenn ein Element in der Liste ausgewählt wurde Liste_L.ItemIndex = -1 --> nicht wurde ausgewählt
   begin
     Item := Liste_L.Items[Liste_L.ItemIndex]; //Daten des Elements werden in Variable gespeichert
     buffer := TStringList.Create;
     SplitText(' ', Item, buffer); //Datenseperierung
-    if (FileExists('C:\\Keypass\\index.txt')) then   //wenn die Index-Datei existiert
+    Eintrag_loeschen(buffer[0]);
+
+    NextAction:= false;
+    Output:= '';
+    Daten:= Name_E.Text + '&' + URL_E.Text + '&' + Nutzername_E.Text + '&' + Passwort_E.Text + '&';
+    Falsches_Zeichen:= 0;
+    for zaehler:= 1 to length(Daten) do
     begin
-      Index_alt:= TStringList.Create;
-      Index_neu:= TStringList.Create;
-      Index_alt.LoadFromFile('C:\\Keypass\\index.txt'); //Daten werden geladen
-      for zaehler:=0 to Index_alt.Count-1 do     //durchläuft alle Elemente der Index - Datei
+      if Daten[zaehler] = '&' then
       begin
-        if(Not(Index_alt[zaehler] = buffer[0])) then //wenn der Eintrag aus der alten Index-Datei nicht der geänderte Eintrag ist
-        begin
-          Index_neu.Add(Index_alt[zaehler]);    //alter Eintrag wird übernommen
-        end
-        else     //wenn es der überarbeitete Eintrag ist
-        begin
-          continue;      //der Neue Eintrag wird Automatisch bei speichern() im Index erstellt
-        end;
+        Falsches_Zeichen+=1;
       end;
-      Index_neu.SaveToFile('C:\\Keypass\\index.txt'); //neue Index-Datei wird gespeichert
-      DeleteFile('C:\\Keypass\\' + buffer[0] + '.txt');  //alte Datei wird gelöscht (Die Datei die Überarbeitet wird)
-
-      Keys_alt := TStringList.Create;
-      Keys_neu := TStringList.Create;
-      buffer2 := TStringList.Create;
-      Keys_alt.LoadFromFile('C:\\Keypass\\Keys.txt');
-      for zaehler:=0 to Keys_alt.Count-1 do
+    end;
+    if falsches_Zeichen <= 4 then
+    begin
+    if (Passwort_public = '') or (Passwort_public = ' ') then
+    begin
+      Fehler_L.Caption := 'es wurde kein Passwort zur bestaetigung eingegeben';
+      Form4.Zweck_L.Caption:= 'Passwort abfrage';  //ändert das Info-Label in Form4 (Passwortabfrage/eingabe)
+    Form4.showModal;  //öffnet die Passwortabfrage/eingabe
+    end
+    else
+    begin
+      Speichern(Daten, Name_E.Text,Output, NextAction); //überarbeitete Datei wird gespeichert
+      if NextAction = true then    //wenn alles funktioniert hat
       begin
-        SplitText(':', Keys_alt[zaehler], buffer2);
-        if Not(buffer2[0] = buffer[0]) then
-        begin
-          Keys_neu.Add(Keys_alt[zaehler]);
-        end
-        else
-        begin
-          continue;
-        end;
-      end;
-      Keys_neu.SaveToFile('C:\\Keypass\\Keys.txt');
-
-      NextAction:= false;
-      Output:= '';
-      Daten:= Name_E.Text + '&' + URL_E.Text + '&' + Nutzername_E.Text + '&' + Passwort_E.Text + '&';
-      if (Passwort_public = '') or (Passwort_public = ' ') then
-      begin
-        Fehler_L.Caption := 'es wurde kein Passwort zur bestaetigung eingegeben';
+        Close;
       end
       else
       begin
-        Speichern(Daten, Name_E.Text,Output, NextAction); //überarbeitete Datei wird gespeichert
-        if NextAction = true then    //wenn alles funktioniert hat
-        begin
-          Close;
-        end
-        else
-        begin
-          Fehler_L.Caption:= Output;  //Fehlerausgabe
-        end;
+        Fehler_L.Caption:= Output;  //Fehlerausgabe
       end;
     end;
+    buffer.Free();
+
+    end
+    else
+    begin
+      Fehler_L.Caption:= 'Das Zeichen && wird verwendet';
+    end;
   end;
-  Index_alt.Free();
-  Index_neu.Free();
-  buffer.Free();
-  Keys_alt.Free();
-  Keys_neu.Free();
-  buffer2.Free();
+end;
+
+procedure TForm3.Loeschen_BClick(Sender: TObject);
+var Item: string;
+var buffer: TStringList;
+begin
+  if Not(Liste_L.ItemIndex = -1) then  //Wenn ein Element in der Liste ausgewählt wurde Liste_L.ItemIndex = -1 --> nicht wurde ausgewählt
+  begin
+    Item := Liste_L.Items[Liste_L.ItemIndex]; //Daten des Elements werden in Variable gespeichert
+    buffer := TStringList.Create;
+    SplitText(' ', Item, buffer); //Datenseperierung
+    Eintrag_loeschen(buffer[0]);
+    Close;
+  end;
 end;
 
 end.

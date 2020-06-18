@@ -44,6 +44,8 @@ procedure TForm2.Hinzufuegen_BClick(Sender: TObject);
 var Daten: string;
 var NextAction: boolean;
 var Output: string;
+var zaehler: integer;
+var Falsches_Zeichen: integer;
 begin
   if Not(FileExists('C:\\Keypass\\Passwort.txt')) then //wenn die Datei Passwort.txt nicht existiert
   begin
@@ -53,10 +55,22 @@ begin
   if (Passwort_public = '') or (Passwort_public = ' ') then
   begin
     Static_L.Caption := 'es wurde kein Passwort zur bestaetigung eingegeben';
+    Form4.Zweck_L.Caption:= 'Passwort abfrage';  //ändert das Info-Label in Form4 (Passwortabfrage/eingabe)
+    Form4.showModal;  //öffnet die Passwortabfrage/eingabe
   end
   else
   begin
     Daten:= Name_E.Text + '&' + URL_E.Text + '&' + Nutzername_E.Text + '&' + Passwort_E.Text + '&'; //Daten werden von Fenster in Variable gespeichert
+    Falsches_Zeichen:= 0;
+    for zaehler:= 1 to length(Daten) do
+    begin
+      if Daten[zaehler] = '&' then
+      begin
+        Falsches_Zeichen+=1;
+      end;
+    end;
+    if Falsches_Zeichen <= 4 then
+    begin
     NextAction:= false; //gibt an ob alles funktioniert hat
     Output:= '';  //genauere Fehlermeldung
     Speichern(Daten, Name_E.Text,Output, NextAction); //Daten werden gespeichert
@@ -68,6 +82,11 @@ begin
     begin
       Fehler_L.Caption:= Output;
       Static_L.Caption:= '';  //Da sich die Labels überlappen wird der Inhalt des einen Labels gelöscht damit man etwas lesen kann
+    end;
+    end
+    else
+    begin
+      Static_L.Caption:= 'Das Zeichen && wird verwendet';
     end;
   end;
 end;
