@@ -5,7 +5,7 @@ unit Passwortabfrage_u;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, md5, sha1, libary_u, Passwortabfrage_u;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, md5, sha1, libary_u;
 
 type
 
@@ -35,47 +35,53 @@ implementation
 
 procedure TForm4.Bestaetigen_EClick(Sender: TObject);
 var Passwort_Hash: TStringList;
-var buffer: array of integer;
+var ASCII_Code: array of integer;
 var zaehler: integer;
 begin
   Passwort_public:= '';
   Passwort_Hash:= TStringList.Create;
+
   if FileExists('C:\\Keypass\\Passwort.txt') then  //wenn die Datei Passwort.txt existiert
   begin
     Passwort_Hash.LoadFromFile('C:\\Keypass\\Passwort.txt');  //lädt die Datei Passwort.txt in Liste
-    if Passwort_Hash[0] = MD5Print(MD5String(Passwort_E.Text)) then //Überprüft ob die Eingabe(gehasht) mit dem gespeicherten gehashten Passwort übereinstimmt --> Passwort richtig
+    if Passwort_Hash[0] = MD5Print(MD5String(Passwort_E.Text)) then //Überprüft ob die Eingabe(gehasht) mit dem gespeicherten gehashten Passwort übereinstimmt --> wenn Passwort richtig
     begin
-      Passwort_local:= SHA1Print(SHA1String(Passwort_E.Text)); //übergabe des Passwortes(gehasht) zur Ver-/Entschlüsselung der Dateien
-      SetLength(buffer, Length(passwort_local));
-      for zaehler:=1 to Length(passwort_local) do
+      //Passwort wird zum Ver-/Entschlüsseln übergeben
+      Passwort_local:= SHA1Print(SHA1String(Passwort_E.Text)); //Passwort wird gehasht
+      SetLength(ASCII_Code, Length(passwort_local));    //Länge des Array wird angepasst
+      for zaehler:=1 to Length(passwort_local) do     //Durchläuf jedes Zeichen des Hashes
       begin
-        buffer[zaehler-1] := ord(passwort_local[zaehler]);  //Übersetzung von Buchstaben in Dezimalzahlen
+        ASCII_Code[zaehler-1] := ord(passwort_local[zaehler]);  //Übersetzung von Buchstaben in Dezimalzahlen
       end;
 
-      Passwort_public:= DezToBin(buffer);  //Übersettzung in Binärcode
+      Passwort_public:= DezToBin(ASCII_Code);  //Übersetzung in Binärcode damit der Schlüssel direkt zur Entschlüsselung verwendet werden kann
 
-      Close;
+      Close;  //Fenster wird geschlossen
+
     end
     else   //wenn das Passwort falsch ist
     begin
-      Zweck_L.Caption := 'Falsches Passwort';
+      Zweck_L.Caption := 'Falsches Passwort'; //Fehleranzeige
     end;
   end
   else  //wenn die Datei Passwort.txt nicht existiert
   begin
-    Passwort_Hash.Add(MD5Print(MD5String(Passwort_E.Text))); //Passwort wird gehasht
-    Passwort_Hash.SaveToFile('C:\\Keypass\\Passwort.txt');  //Passwort wird gespeichert
-    Passwort_local:= SHA1Print(SHA1String(Passwort_E.Text)); //übergabe des Passwortes(gehasht) zur Ver-/Entschlüsselung der Dateien
-      SetLength(buffer, Length(Passwort_local));
-      for zaehler:=1 to Length(Passwort_local) do
-      begin
-        buffer[zaehler-1] := ord(Passwort_local[zaehler]);  //Übersetzung von Buchstaben in Dezimalzahlen
-      end;
-      Passwort_public:= DezToBin(buffer); //Hash des Passwortes in Binärcode wird an Libary_u gegeben
-      Close;
-  end;
-  Passwort_Hash.Free();
 
+    Passwort_Hash.Add(MD5Print(MD5String(Passwort_E.Text))); //Passwort wird gehasht
+    Passwort_Hash.SaveToFile('C:\\Keypass\\Passwort.txt');  //Passwort(gehasht) wird gespeichert
+
+    //Passwort wird zum Ver-/Entschlüsseln übergeben
+    Passwort_local:= SHA1Print(SHA1String(Passwort_E.Text)); //Passort wird gehasht
+    SetLength(ASCII_Code, Length(Passwort_local));  //Länge des Array wird angepasst
+    for zaehler:=1 to Length(Passwort_local) do
+    begin
+      ASCII_Code[zaehler-1] := ord(Passwort_local[zaehler]);  //Übersetzung von Buchstaben in Dezimalzahlen
+    end;
+    Passwort_public:= DezToBin(ASCII_Code); //Übersetzung in Binärcode damit der Schlüssel direkt zur Entschlüsselung verwendet werden kann
+
+    Close;  //Fenster wird geschlossen
+  end;
+  Passwort_Hash.Free();  //Arbeitsspeicher wird freigegeben
 end;
 
 end.

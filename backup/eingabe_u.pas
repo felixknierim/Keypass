@@ -14,8 +14,7 @@ type
   TForm2 = class(TForm)
     Abbrechen_B: TButton;
     Hinzufuegen_B: TButton;
-    Fehler_L: TLabel;
-    Static_L: TLabel;
+    Anmerkung_L: TLabel;
     Passwort_E: TEdit;
     Passwort_L: TLabel;
     Nutzername_E: TEdit;
@@ -42,7 +41,7 @@ implementation
 { TForm2 }
 procedure TForm2.Hinzufuegen_BClick(Sender: TObject);
 var Daten: string;
-var NextAction: boolean;
+var Fehler: boolean;
 var Output: string;
 var zaehler: integer;
 var Falsches_Zeichen: integer;
@@ -52,9 +51,9 @@ begin
     Form4.Zweck_L.Caption:= 'Passwort erstellen'; //ändert das Info-Label in Form4 (Passwortabfrage/eingabe)
     Form4.ShowModal;  //öffnet die Passwortabfrage/eingabe
   end;
-  if (Passwort_public = '') or (Passwort_public = ' ') then
+  if (Passwort_public = '') or (Passwort_public = ' ') then  //wenn das passwort noch nicht eingegeben wurde
   begin
-    Static_L.Caption := 'es wurde kein Passwort zur bestaetigung eingegeben';
+    Anmerkung_L.Caption := 'es wurde kein Passwort zur bestaetigung eingegeben';   //Fehlerausgabe
     Form4.Zweck_L.Caption:= 'Passwort abfrage';  //ändert das Info-Label in Form4 (Passwortabfrage/eingabe)
     Form4.showModal;  //öffnet die Passwortabfrage/eingabe
   end
@@ -62,31 +61,30 @@ begin
   begin
     Daten:= Name_E.Text + '&' + URL_E.Text + '&' + Nutzername_E.Text + '&' + Passwort_E.Text + '&'; //Daten werden von Fenster in Variable gespeichert
     Falsches_Zeichen:= 0;
-    for zaehler:= 1 to length(Daten) do
+    for zaehler:= 1 to length(Daten) do   //Durchläuft alle Zeichen von Daten
     begin
-      if Daten[zaehler] = '&' then
+      if (Daten[zaehler] = '&') or (Daten[zaehler] = 'ä') then  //wenn das Zeichen & in Daten gefunden wird
       begin
-        Falsches_Zeichen+=1;
+        Falsches_Zeichen+=1;  //Zähl-Variable wird um 1 erhöht
       end;
     end;
-    if Falsches_Zeichen = 4 then
+    if Falsches_Zeichen <= 4 then   //wenn unter 5 & -Zeichen in Daten vorhanden sind
     begin
-    NextAction:= false; //gibt an ob alles funktioniert hat
-    Output:= '';  //genauere Fehlermeldung
-    Speichern(Daten, Name_E.Text,Output, NextAction); //Daten werden gespeichert
-    if NextAction = true then
-    begin
-      Close;  //Fenster wird geschlossen
+      Fehler:= false; //gibt an ob alles funktioniert hat
+      Output:= '';  //genauere Fehlermeldung
+      Speichern(Daten, Name_E.Text,Output, Fehler); //Daten werden gespeichert
+      if Fehler = true then   //wenn es keinen Fehler gab
+      begin
+        Close;  //Fenster wird geschlossen
+      end
+      else //wenn es einen Fehler gab
+      begin
+        Anmerkung_L.Caption:= Output; //Fehlermeldung wird angezeigt
+      end;
     end
-    else
+    else //wenn 5 mal oder öfter das & -Zeichen genutzt wurde
     begin
-      Fehler_L.Caption:= Output;
-      Static_L.Caption:= '';  //Da sich die Labels überlappen wird der Inhalt des einen Labels gelöscht damit man etwas lesen kann
-    end;
-    end
-    else
-    begin
-      Static_L.Caption:= 'Das Zeichen && wird verwendet';
+      Anmerkung_L.Caption:= 'Das Zeichen && wird verwendet';  //Fehlermeldung
     end;
   end;
 end;

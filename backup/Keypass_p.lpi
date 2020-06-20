@@ -123,12 +123,12 @@
         <UnitName Value="Eingabe_u"/>
       </Unit2>
       <Unit3>
-        <Filename Value="data_dialog_u.pas"/>
+        <Filename Value="eintrag_bearbeiten_u.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form3"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Data_Dialog_u"/>
+        <UnitName Value="Eintrag_bearbeiten_u"/>
       </Unit3>
       <Unit4>
         <Filename Value="mylibary_u.pas"/>

@@ -30,7 +30,7 @@ type
   private
 
   public
-    Liste_L: TListBox; //Dient der Übergabe
+    Liste_L: TListBox; //Dient der Übergabe zwischen Keypass_u und Data_Dialog_u, weil es nicht möglich ist,dass zwei Forms sich gegenseitig bei uses verwenden
   end;
 
 var
@@ -52,53 +52,56 @@ end;
 
 procedure TForm3.Speichern_BClick(Sender: TObject);
 var Item: string;
-var buffer: TStringList;
-var NextAction: boolean;
+var ausgewaehltes_Element: TStringList;
+var Fehler: boolean;
 var Daten: string;
 var Output: string;
 var zaehler: integer;
 var falsches_Zeichen: integer;
-begin                                  //neue Index-Datei wird erstellt
+begin
+  //Ausgewähltes Element wird ermittelt
   if Not(Liste_L.ItemIndex = -1) then  //Wenn ein Element in der Liste ausgewählt wurde Liste_L.ItemIndex = -1 --> nicht wurde ausgewählt
   begin
     Item := Liste_L.Items[Liste_L.ItemIndex]; //Daten des Elements werden in Variable gespeichert
-    buffer := TStringList.Create;
-    SplitText(' ', Item, buffer); //Datenseperierung
-    Eintrag_loeschen(buffer[0]);
+    ausgewaehltes_Element := TStringList.Create;
+    SplitText(' ', Item, ausgewaehltes_Element); //Datenseperierung
+    Eintrag_loeschen(ausgewaehltes_Element[0]); //alte Datei wird gelöscht mit Keys und index-Eintrag
 
-    NextAction:= false;
+    Fehler:= false;
     Output:= '';
     Daten:= Name_E.Text + '&' + URL_E.Text + '&' + Nutzername_E.Text + '&' + Passwort_E.Text + '&';
+
     Falsches_Zeichen:= 0;
     for zaehler:= 1 to length(Daten) do
     begin
       if Daten[zaehler] = '&' then
       begin
         Falsches_Zeichen+=1;
-        break;
       end;
     end;
+
     if falsches_Zeichen <= 4 then
     begin
-    if (Passwort_public = '') or (Passwort_public = ' ') then
-    begin
-      Fehler_L.Caption := 'es wurde kein Passwort zur bestaetigung eingegeben';
-      Form4.Zweck_L.Caption:= 'Passwort abfrage';  //ändert das Info-Label in Form4 (Passwortabfrage/eingabe)
-    Form4.showModal;  //öffnet die Passwortabfrage/eingabe
-    end
-    else
-    begin
-      Speichern(Daten, Name_E.Text,Output, NextAction); //überarbeitete Datei wird gespeichert
-      if NextAction = true then    //wenn alles funktioniert hat
+      if (Passwort_public = '') or (Passwort_public = ' ') then
       begin
-        Close;
+        Fehler_L.Caption := 'es wurde kein Passwort zur bestaetigung eingegeben';
+        Form4.Zweck_L.Caption:= 'Passwort abfrage';  //ändert das Info-Label in Form4 (Passwortabfrage/eingabe)
+        Form4.showModal;  //öffnet die Passwortabfrage/eingabe
       end
       else
       begin
-        Fehler_L.Caption:= Output;  //Fehlerausgabe
+        Speichern(Daten, Name_E.Text,Output, Fehler); //überarbeitete Datei wird gespeichert
+        if Fehler = true then    //wenn alles funktioniert hat
+        begin
+          Close;
+        end
+        else
+        begin
+          Fehler_L.Caption:= Output;  //Fehlerausgabe
+        end;
       end;
-    end;
-    buffer.Free();
+
+      ausgewaehltes_Element.Free();
 
     end
     else
@@ -110,14 +113,14 @@ end;
 
 procedure TForm3.Loeschen_BClick(Sender: TObject);
 var Item: string;
-var buffer: TStringList;
+var ausgewaehltes_Element: TStringList;
 begin
   if Not(Liste_L.ItemIndex = -1) then  //Wenn ein Element in der Liste ausgewählt wurde Liste_L.ItemIndex = -1 --> nicht wurde ausgewählt
   begin
     Item := Liste_L.Items[Liste_L.ItemIndex]; //Daten des Elements werden in Variable gespeichert
-    buffer := TStringList.Create;
-    SplitText(' ', Item, buffer); //Datenseperierung
-    Eintrag_loeschen(buffer[0]);
+    ausgewaehltes_Element := TStringList.Create;
+    SplitText(' ', Item, ausgewaehltes_Element); //Datenseperierung
+    Eintrag_loeschen(ausgewaehltes_Element[0]);
     Close;
   end;
 end;
