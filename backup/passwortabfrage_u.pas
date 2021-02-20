@@ -12,13 +12,13 @@ type
   { TForm4 }
 
   TForm4 = class(TForm)
-    Bestaetigen_E: TButton;
+    Bestaetigen_B: TButton;
     Zweck_L: TLabel;
     Passwort_E: TEdit;
     Static_L: TLabel;
-    procedure Bestaetigen_EClick(Sender: TObject);
+    procedure Bestaetigen_BClick(Sender: TObject);
   private
-    var Passwort_local: string;
+
   public
 
   end;
@@ -33,10 +33,11 @@ implementation
 { TForm4 }
 
 
-procedure TForm4.Bestaetigen_EClick(Sender: TObject);
+procedure TForm4.Bestaetigen_BClick(Sender: TObject);
 var Passwort_Hash: TStringList;
 var ASCII_Code: array of integer;
 var zaehler: integer;
+var Passwort_local: string;
 begin
   Passwort_public:= '';
   Passwort_Hash:= TStringList.Create;

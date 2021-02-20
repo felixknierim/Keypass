@@ -15,13 +15,13 @@ object Form4: TForm4
     Width = 268
     TabOrder = 0
   end
-  object Bestaetigen_E: TButton
+  object Bestaetigen_B: TButton
     Left = 64
     Height = 29
     Top = 196
     Width = 251
     Caption = 'Bestätigen'
-    OnClick = Bestaetigen_EClick
+    OnClick = Bestaetigen_BClick
     TabOrder = 1
   end
   object Passwort_L: TLabel

@@ -11,9 +11,8 @@ procedure SplitText(Trenner: Char; str: String; var Output: TStringList);
 procedure BinToDez(input: String; var Zwischenspeicher_dez: array of integer);
 function DezToBin(input: array of integer): String;
 procedure speichern(Daten: String; Name: String; var Output: String; var Fehler: boolean);
-function encrypt(Daten: string; Key: string): string;
+function crypt(Daten: string; Key: string): string;
 function BinXor(binaer1: integer; binaer2: integer): integer;
-function decrypt(Daten: string; Key: string): string;
 procedure Eintrag_loeschen(Name:string);
 
 var Passwort_public: string;
@@ -43,17 +42,18 @@ begin
   zaehler:=1;
   while (zaehler <= Length(Zwischenspeicher_bin) ) do  //solange der Zähler-Variable kleiner ist als Zwischenspeicher_bin
   begin
-    Zwischenspeicher_dez[Floor(zaehler/7)]:= 0;  //Reset         ein Zeichen -> 7 bit  Florr(zaehler/7) damit immer der gleiche Eintrag benutzt wird
+    Zwischenspeicher_dez[Floor(zaehler/8)]:= 0;  //Reset         ein Zeichen -> 8 bit  Flor(zaehler/8) damit immer der gleiche Eintrag benutzt wird für eine Zahl
 
-    Zwischenspeicher_dez[Floor(zaehler/7)] += Zwischenspeicher_bin[zaehler-1] *2**6;   //Übersetzung von Binärenzahlen in Dezimalzahlen zaehler-1 damit es bei bufferbin[0] anfängt
-    Zwischenspeicher_dez[Floor(zaehler/7)] += Zwischenspeicher_bin[zaehler] *2**5;
-    Zwischenspeicher_dez[Floor(zaehler/7)] += Zwischenspeicher_bin[zaehler+1] *2**4;
-    Zwischenspeicher_dez[Floor(zaehler/7)] += Zwischenspeicher_bin[zaehler+2] *2**3;
-    Zwischenspeicher_dez[Floor(zaehler/7)] += Zwischenspeicher_bin[zaehler+3] *2**2;
-    Zwischenspeicher_dez[Floor(zaehler/7)] += Zwischenspeicher_bin[zaehler+4] *2**1;
-    Zwischenspeicher_dez[Floor(zaehler/7)] += Zwischenspeicher_bin[zaehler+5] *2**0;
+    Zwischenspeicher_dez[Floor(zaehler/8)] += Zwischenspeicher_bin[zaehler-1] *2**7;   //Übersetzung von Binärenzahlen in Dezimalzahlen zaehler-1 damit es bei bufferbin[0] anfängt
+    Zwischenspeicher_dez[Floor(zaehler/8)] += Zwischenspeicher_bin[zaehler] *2**6;
+    Zwischenspeicher_dez[Floor(zaehler/8)] += Zwischenspeicher_bin[zaehler+1] *2**5;
+    Zwischenspeicher_dez[Floor(zaehler/8)] += Zwischenspeicher_bin[zaehler+2] *2**4;
+    Zwischenspeicher_dez[Floor(zaehler/8)] += Zwischenspeicher_bin[zaehler+3] *2**3;
+    Zwischenspeicher_dez[Floor(zaehler/8)] += Zwischenspeicher_bin[zaehler+4] *2**2;
+    Zwischenspeicher_dez[Floor(zaehler/8)] += Zwischenspeicher_bin[zaehler+5] *2**1;
+    Zwischenspeicher_dez[Floor(zaehler/8)] += Zwischenspeicher_bin[zaehler+6] *2**0;
 
-    zaehler += 7; //ein Zeichen wird in 7 bit gespeichert also hier ein Zeichen weiter (eigentlich sind es immer 8 bit aber ich habe hier 7 bit verwendet, weil hier keine 8 bit benötigt werden
+    zaehler += 8; //ein Zeichen wird in 8 bit gespeichert also hier ein Zeichen weiter
   end;
   Zwischenspeicher_bin := Nil;   //Arbeitsspeicher wird freigegeben
 end;
@@ -61,7 +61,7 @@ end;
 function DezToBin(input: array of integer): String;  //Dezimalzahlen zu Binärzahlen
 var zaehler: integer;
 var zaehler2: integer;
-var Zwischenspeicher: array[0..6] of integer;
+var Zwischenspeicher: array[0..7] of integer;
 var zwischenergebnis: string;
 begin
   zwischenergebnis := '';
@@ -76,6 +76,7 @@ begin
     Zwischenspeicher[4]:= 0;
     Zwischenspeicher[5]:= 0;
     Zwischenspeicher[6]:= 0;
+    Zwischenspeicher[7]:= 0;
 
     while Not(input[zaehler] = 0) do   // zu Binaercode, Ergebnis in Zwischenspeicher bloß Rueckwaerts     solange ausgewählte Zahl nicht 0 ist
     begin
@@ -91,6 +92,7 @@ begin
       zwischenergebnis += IntToStr(Zwischenspeicher[zaehler2]); //wird zum gesammten Binärstring hinzugefügt
     end;
   end;
+  Zwischenspeicher:= Nil;
 
   DezToBin := zwischenergebnis; //Rueckgabewert
 end;
@@ -120,7 +122,7 @@ begin
     generated_key += IntToStr(random(2));
   end;
 
-  verschluesselte_Daten := encrypt(Bin_Code, generated_key); //verschlüsselt die Daten
+  verschluesselte_Daten := crypt(Bin_Code, generated_key); //verschlüsselt die Daten
 
   //schlüssel speichern
   if Not(FileExists('C:\\Keypass\\' + Name + '.txt')) then   //wenn der Eintrag noch nicht vorhande ist
@@ -128,7 +130,7 @@ begin
     Keys:= TStringList.Create;
     if FileExists('C:\\Keypass\\Keys.txt') then    //Wenn Keys.txt Datei existiert
       Keys.LoadFromFile('C:\\Keypass\\Keys.txt');  //Schlüssel werden geladen
-    Keys.Add(Name + ':' + encrypt(generated_key,Passwort_public)); //neuer Schlüssel wird hinzugefügt
+    Keys.Add(Name + ':' + crypt(generated_key,Passwort_public)); //neuer Schlüssel wird hinzugefügt und verschlüsselt
     Keys.SaveToFile('C:\\Keypass\\Keys.txt'); //Schlüssel werden mit neuem Schlüssel gespeichert    alte Datei wird Überschrieben
     Keys.Free();  //Arbeitsspeicher wird freigegeben
   end;
@@ -161,7 +163,7 @@ begin
   ASCII_Code := Nil;
 end;
 
-function encrypt(Daten: string; Key: string): string;  //verschlüsselt Daten mit Key
+function crypt(Daten: string; Key: string): string;  //verschlüsselt Daten mit Key
 var zaehler: integer;
 var verschluesselte_Daten: string;
 begin
@@ -172,95 +174,79 @@ begin
     begin
       verschluesselte_Daten += IntToStr(BinXor(StrToInt(Daten[zaehler]), StrToInt(Key[zaehler])));  //die beiden Zahlen werden mit operator XOR bearbeitet und an einen String angehängt
     end;
-    encrypt:= verschluesselte_Daten;      //Rückgabe des Ergebnisses
+    crypt:= verschluesselte_Daten;      //Rückgabe des Ergebnisses
   end
   else //wenn die Daten länger sind als der Schlüssel
   begin
-    encrypt:= encrypt(Daten, Key + Key);   //Rekursion mit verdoppeltem Schlüssel (zweimal der gleiche Schlüssel hintereinandergehängt)
+    crypt:= crypt(Daten, Key + Key);   //Rekursion mit verdoppeltem Schlüssel (zweimal der gleiche Schlüssel hintereinandergehängt)
   end;
 end;
 
 function BinXor(binaer1: integer; binaer2: integer): integer;    //gibt den XOR Wert von zwei zahlen zurück nur 0 und 1 möglich
 begin
-  if((binaer1 = 0) and (binaer2 = 0)) or ((binaer1 = 1) and (binaer2 = 1)) then //wenn beide zahlen den gleichen Wert haben
-  begin
-    BinXor:= 0;   //0 wird zurückgegeben
-  end
-  else if ((binaer1 = 1) and (binaer2 = 0)) or ((binaer1 = 0) and (binaer2 = 1)) then   //wenn dei Zahlen unterschiedliche Werte haben
-  begin
-    BinXor:= 1;  //1 wird zurückgegeben
-  end;
+  result:= (binaer1 + binaer2) mod 2;
 end;
 
-function decrypt(Daten: string; Key: string): string;  //entschlüsselt Daten mit Key, macht im Prinzip genau das gleiche wie encrypt allerdings kann man so besser unterscheiden ob Ver- oder Entschlüsselt wird
-var zaehler: integer;
-var zwischenergebnis: string;
-begin
-  zwischenergebnis:= '';
-  if Length(Daten) <= Length(Key) then   //der Schlüssel muss mindestens so lang sein wie die Daten
-  begin
-    for zaehler:=1 to Length(Daten) do  //zaehler:=1 weil das nullte Element eines Strings nicht auslesbar ist, durchläuft alle Zeichen von Daten
-    begin
-      zwischenergebnis+= IntToStr(BinXor(StrToInt(Daten[zaehler]), StrToInt(Key[zaehler]))); //die beiden Zahlen werden mit operator XOR bearbeitet und an einen String angehängt
-    end;
-    decrypt := zwischenergebnis;   //Rückgabe des Ergebnisses
-  end
-  else  //wenn die Daten länger sind als der Schlüssel
-  begin
-    decrypt:= decrypt(Daten, Key + Key);  //Rekursion mit verdoppeltem Schlüssel (zweimal der gleiche Schlüssel hintereinandergehängt)
-  end;
-end;
-
-procedure Eintrag_loeschen(Name: string);
+procedure Eintrag_loeschen(Name: string);  //löscht einen Eintrag
 var index_alt: TStringList;
 var index_neu: TStringList;
 var zaehler: integer;
 var Keys_alt: TStringList;
 var Keys_neu: TStringList;
-var buffer2: TStringList;
+var Key_Eintrag: TStringList;
 begin
   if (FileExists('C:\\Keypass\\index.txt')) then   //wenn die Index-Datei existiert
   begin
     Index_alt:= TStringList.Create;
     Index_neu:= TStringList.Create;
     Index_alt.LoadFromFile('C:\\Keypass\\index.txt'); //Daten werden geladen
+
     for zaehler:=0 to Index_alt.Count-1 do     //durchläuft alle Elemente der Index - Datei
     begin
-      if(Not(Index_alt[zaehler] = Name)) then //wenn der Eintrag aus der alten Index-Datei nicht der geänderte Eintrag ist
+      if(Not(Index_alt[zaehler] = Name)) then //wenn der Eintrag aus der alten Index-Datei nicht der zu löschende Eintrag ist
       begin
         Index_neu.Add(Index_alt[zaehler]);    //alter Eintrag wird übernommen
       end
       else     //wenn es der überarbeitete Eintrag ist
       begin
-        continue;      //der Neue Eintrag wird Automatisch bei speichern() im Index erstellt
+        continue;      // Eintrag wird nicht übernommen -> bei Bearbeitung eines Eintrags wird die neue Datei in speichern() gespeichert
       end;
     end;
+
     Index_neu.SaveToFile('C:\\Keypass\\index.txt'); //neue Index-Datei wird gespeichert
+
+    Index_alt.free; //Arbeitsspeicher wird freigegeben
+    Index_neu.free;
+  end;
+
+  if FileExists('C:\\Keypass\\' + Name + '.txt') then  //wenn der Eintrag existiert
     DeleteFile('C:\\Keypass\\' + Name + '.txt');  //alte Datei wird gelöscht (Die Datei die Überarbeitet wird)
 
+  if FileExists('C:\\Keypass\\Keys.txt') then  //wenn die Keys-Datei existiert
+  begin
     Keys_alt := TStringList.Create;
     Keys_neu := TStringList.Create;
-    buffer2 := TStringList.Create;
-    Keys_alt.LoadFromFile('C:\\Keypass\\Keys.txt');
-    for zaehler:=0 to Keys_alt.Count-1 do
+    Key_Eintrag := TStringList.Create;
+    Keys_alt.LoadFromFile('C:\\Keypass\\Keys.txt'); //alte Schlüssel werden geladen
+
+    for zaehler:=0 to Keys_alt.Count-1 do  //durchläuft die Elemente von Keys_alt
     begin
-      SplitText(':', Keys_alt[zaehler], buffer2);
-      if Not(buffer2[0] = Name) then
+      SplitText(':', Keys_alt[zaehler], Key_Eintrag); //Name und Schlüssel werden voneinander getrennt
+      if Not(Key_Eintrag[0] = Name) then   //abgleich ob Eintrag der zu löschende Eintrag ist
       begin
-        Keys_neu.Add(Keys_alt[zaehler]);
+        Keys_neu.Add(Keys_alt[zaehler]);  //alter eintrag wird übernommen
       end
-      else
+      else  //wenn ausgewählte datei zu löschende Datei ist
       begin
-        continue;
+        continue; //wird übersprungen
       end;
     end;
-    Keys_neu.SaveToFile('C:\\Keypass\\Keys.txt');
+    Keys_neu.SaveToFile('C:\\Keypass\\Keys.txt'); //neue Datei wird gespeichert
 
-    Index_alt.free;
-    Index_neu.free;
-    Keys_alt.free;
+
+    Keys_alt.free;  //Arbeitsspeicher wird freigegeben
     Keys_neu.free;
-    buffer2.free;
+    Key_Eintrag.free;
   end;
 end;
 

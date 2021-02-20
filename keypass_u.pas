@@ -119,8 +119,8 @@ begin
           SplitText(':',Keys[zaehler2], getrennter_Key);  //Informationen werden aufgeteilt getrennter_Key[0]->Dateiname, getrennter_Key[1]->verschlüsselter Schlüssel
           if getrennter_Key[0] = Index[zaehler] then      //überprüfung ob es der passende Schlüssel ist
           begin;
-            getrennter_Key[1] := decrypt(getrennter_Key[1], Passwort_public);  //Schlüssel wird mit Passwort der Benutzers entschlüsselt
-            Daten[0]:= decrypt(Daten[0], getrennter_Key[1]);   //Eintrag wird mit entschlüsseltem Schlüssel entschlüsselt
+            getrennter_Key[1] := crypt(getrennter_Key[1], Passwort_public);  //Schlüssel wird mit Passwort der Benutzers entschlüsselt
+            Daten[0]:= crypt(Daten[0], getrennter_Key[1]);   //Eintrag wird mit entschlüsseltem Schlüssel entschlüsselt
           end;
         end;
 
@@ -145,6 +145,7 @@ begin
     Index.Free(); //Arbeitsspeicher wird freigegeben
     Daten.Free();
     Datenverarbeitet.Free();
+    bindecode:= Nil;
   end;
 end;
 
